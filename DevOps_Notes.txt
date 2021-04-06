@@ -1,0 +1,3805 @@
+================================================================= Master DevOps ==================================================
+
+# important terms in that introduce by the Dark Lunching Technique and they lie at the heart of the devops
+# also called DevOps life cycle phases
+#- continuous monitoring	
+#- continuous development	
+#- continuous testing		
+#- continuous integration
+#- continuous deployment
+
+===============================================================Start Of Git Phase=================================================
+
+# git is tool and GitHub is the repository 
+
+# to change the configuration file of git
+$ git config
+
+# to set the name in configuration file of git 
+$ git config --global user.name "Al Ogaidi, Mustafa"
+
+# to set the email in configuration file of git
+$ git config --global user.email "godric.phoenix@gmail.com"
+
+# to get a list of different configuration command for git 
+$ git config --list
+
+# to get help on git
+$ git help
+
+# to get help on a specific command
+$ git help <command>
+
+# to start new project with git u need to create new folder 
+$mkdir <name>
+
+# to create new repository in the project folder
+$ git init
+
+# to view the hidden repository in a directory 
+$ ls -al
+
+# to see changes and the commits in a repo, to verify the status of git project
+$ git status
+
+# to commit the changes in any file we need first to add these changes to the git project, to add all changes (before using the command below u will see this phrase <Untracked files> and file(s) in red color)
+$ git add .
+# after using the command above u will see this phrase <Changes to be committed> and file(s) in green color.
+
+# to add changes in a specific file 
+$ git add <file name>
+
+# to commit changes, (-m  ==> message)
+$ git commit -m "any text"
+# after using the command above is u use git status u will get this message <nothing to commit, working tree clean>
+# if we do any changes to the file above like adding some text and use git status u will get this message <Changes not staged for commit>
+
+# if we need to see all the commits logs inside the git
+$ git log
+
+# if u need to see the commit log for a particular member inside the git
+$ git log --author="member name"
+
+# the git workflow is --> working area ==> staging area ==> repository
+
+
+# if u wanna to use sublime text as git editor use the commands below <Please advise that the commands below for mac osx>
+$ ln -s /Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl /usr/local/bin/.
+$ echo $PATH
+$ git config --global core.editor "subl -n -w"
+
+
+# if u wanna to use Notepad++ as git editor in windows u ll use the steps below.
+# first of all u need to add Notepad++ to the path in windows, if u didn't change the default path of the 
+# installation u will find the notepad++.exe in <C:\Program Files (x86)\Notepad++>
+
+# go to the search and look for environment variable.
+# in environment variable --> system variables --> path --> new and put this path <C:\Program Files (x86)\Notepad++>
+
+# now we need to configure notepad++ with bash, in ur project directory.
+$ notepad++ .bash_profile  <-- if this file exist, it will create it, if not it will prompt u to create it.
+
+# in the new page add the line below.
+> alias npp='notepad++.exe --multilnst --nosession'
+
+# now we need to configure notepad++ with git 
+$ git config --global core.editor "\"C:\Program Files (x86)\Notepad++\notepad++.exe""  -multiInst -notabbar -nosession -noPlugin
+# if u don't receive any error message that's mean it's good.
+
+# now to verify if our work is ok 
+$ cat ~/.gitconfig
+$ git config --global --list
+$ git config --global --e   <-- it's mean that i wanna to edit the config file.
+
+# if u wanna to see the changes in ur repo area and ur working area, in another word the difference between local repo and local working area
+$ git diff
+
+# now to view the changes between staging area and repo
+$ git diff --staged
+
+# if u need to delete file in git, remove it from the working area using rm <file name>, or
+$ git rm <file name>  --> if we using this command we will skip the next command since it will be staged already, we need to commit directly. 
+$ git add .
+$ git commit -m "message" 
+
+# if u wanna to create a centralized repo in git hub
+ -create new repo in GitHub
+ -create new work area in ur computer
+ -initialize the new work are using git init
+ -copy the GitHub url using <clone>
+ $ git remote add origin "GitHub url"
+ -pull the changes from the GitHub
+ $ git pull origin <branch>
+
+ - if there's any issue with pull related to the history u can use this command.
+ # go pull origin master --allow-unrelated-histories 
+
+ -push the changes from local repo to GitHub
+ $ git push origin master
+ -we need to keep our local repo up to date with centralized repo.
+
+# to create new branch <which is only a pointer not a real repo> use the following command
+ $ git branch <branch name>
+
+# now to switch the branch <after creating new branch>
+$ git checkout <branch name>
+
+# to view branches in git
+$ git branch   or git branch -a
+
+# file created in a branch <not master> will not been seen in master until merge.
+# after ensure that everything in the branch is ok u can merge the branch with master.
+# if u wanna to push the content of a branch to GitHub please push it to a branch, even if it's not exist in the GitHub yet.
+
+# if u wanna to merge with a specific branch for ex master, u need first to git checkout to the master and then use this command.
+$ git merge <branch name>  <-- if only move commits from branch to another u can see <Fast-forward just move the pointer>
+$ git push origin <branch name>   <--- GitHub
+
+# to remove file from staging area and get it back to the working area
+$ git reset HEAD <file name>
+
+# to revert a commit from the local repo, changes will be back to the working area.
+$ git reset HEAD~
+
+# if u wanna to remove .git folder from ur project
+$ rm -rf .git
+
+# fork in GitHub mean create that target repo in ur private space or personal repo.
+
+# to clone project from GitHub to our local work area.
+$ git clone <url from github>
+
+# to open commit file, it's best to connect it with text editor
+$ git commit
+
+# general notes when u use git  1. use add for any untracked files --> 2. commit them to local repo --> 3. pull the latest update from the centralize repo --> 4. use push
+
+# to discard changes in file before staging, use
+$ git checkout -- <file>
+
+# if u wanna to remove file for example after u already commit all changes and for some reason u wanna to get it back
+$ git rm <file name> ---> this will remove file from staging area as well working area !!!.
+$ git reset HEAD <file name>
+$ git checkout -- <file name>
+
+# now if we remove file directly from the system <not using git>
+$ rm <file name> 
+$ git reset HEAD <file name>
+$ git checkout -- <file name>
+
+# now if u wanna to delete a tree of folders with files included.
+$ git rm -rf <directory name>  ---> recursively delete
+# when commit the change above it can't be get back.
+
+# to rename file in git project
+$ git mv <old file name> <new file name>
+
+# there's different between using mv as os command and git mv, in the using of <mv> it will working only on the working area by delete the old named file and create new one. conversely the git mv will working on both working area and staging area as well, by rename the file from old name to the new name.
+
+
+# to get more graphical and decorated view for git log we can use the command
+$ git log --oneline --graph --decorate --all
+
+# to search log for specific date use
+$ git log --since="2 days ages"   <--- example
+
+# if u wanna to find changes that been done for a specific file
+$ git log -- <file name>
+
+# now if u wanna to get details about any commit
+$ git show <commit id, even the first 7 chars>
+
+# to create alias for any long command <to make long command short>s
+$ git config --global alias.<name> "command options>
+$ git <alias name>  <-- how to use alias
+$ git config --global alias.history "log --all --graph --decorate --oneline"  <== to use this alias $ git history
+
+# another fantastic one:
+$ git log --pretty=format:"%h%x09%an%x09%ad%x09%s" 
+
+# for example if u wanna to do some change in the alias command after u create it. let say u need to remove --graph from it.
+# u need to edit the config file 
+$ nano ~/.gitcofig
+
+# if u wanna to exclude the unwanted files in git
+#- create hidden file called <.gitignore>
+#.git ignore pattern:
+#- <file name>
+#- <*.123>
+#- <folder name/>
+$nano .gitignore
+
+# if u face any issue with .gitignore file like git don't ignore what u put in the .gitignore file
+$ git rm -r --cached .
+$ git add .
+$ git commit -m "fixed untracked files"
+
+# if u wanna to create access.log file
+$ nano access.log
+# it will contain the following:
+#- /status 200
+#- /httpaccess 200
+#- /mktsp 300
+#- /dummy 3000
+
+# if u wanna to create error.log file
+$ nano error.log
+#- Authen error response code is 400
+#- Not able to connect to server
+#- State elemnet reference
+#- Array out of bound index
+
+# now to exclude all .log file(s) from  git project
+$ nano .gitignore
+# *.log  <-- add this to .gitignore
+ 
+# to compare a specific file between working area and staging area.
+$ git diff <file name>
+
+# to compare the changes between working area and repo
+$ git diff HEAD <file name > <--- file name is optional
+
+# to compare the changes between staging area and repo
+$ git diff --staged HEAD <file name>
+
+# to compare the changes between 2 commits
+$ git diff <commit id 1> <commit id 2>
+
+# to compare the changes between the last commit and -1 the last commit <previous the last commit>
+$ git diff HEAD HEAD^
+
+# to list all branches in the git as well the remote repo and branches.
+$ git branch -a 
+
+# to delete branch from git locally, but u need to be not in this branch
+$ git branch -d <branch name>
+
+# if u wanna to rename the branch
+$ git branch -m <old branch name> <new branch name>
+
+#if u wanna to add message with merge process
+$ git merge <branch1> -m "Some Text"
+
+# if u got this error message <CONFLICT (content): Merge conflict in file name> that's mean we have conflict issue in this file.
+# to resolve the conflict issue above u need to edit the file and update it.
+$ git merge --abort
+
+# git rebase is re-writing the project history by creating brand new commits for each commit, so it's move the entire feature branch to beginning on the top of the master branch.
+
+# u can create new branch by using 
+$ git checkout -b <branch name>
+
+# u can do both staging and commit at the same time
+$ git commit -am "text"
+
+# to rebase branch
+$ git checkout <Feature_Branch>
+$ git rebase <target branch>
+
+# if we have any rebase conflict, first thing u need to do is to abort the mission.
+$ git rebase --abort
+
+# to find difference between branch and another branch
+$ git diff <branch1> <branch2>
+
+# to continue rebase process
+$ git rebase --continue
+
+# to skip the current patching in rebase process
+$ git rebase --skip
+
+# if u modify anything in the remote repo and u wanna to see this modifying reflected to the local repo
+$ git fetch   <--- it will fetch out all the changes which present in the remote repo but not present in ur local machine
+
+# must likely u'll see this message <Your branch and 'origin/master' have diverged,> that's mean remote repo and local repo are not in sync.
+# now the question in the case above how we can rebase the local repo with remote repo, to pick all the changes that we have in the local repo (the local branch) and put it on the head of the changes in the remote branchs.
+$ git pull --rebase origin master.
+
+# this phrase (HEAD -> master, origin/master, origin/HEAD) mean both local and remote repo in sync.
+
+# if u wanna to stash ur work and work with another urgent thing.
+$ git stash 
+
+# stash commands , Keep in ur mind stash working on staged area only. 
+#- git stash 
+#- git stash apply
+#- git stash list
+#- git stash drop
+
+# if u wanna to know if there's any changes in the stash file
+$ git stash list
+
+# WIP = Working In Progress
+
+# if u wanna to apply stash changes to ur working directory.
+$ git stash apply
+
+# after revert changes from the stash u need to drop it, otherwise it will confuse u. 
+$ git stash drop
+
+# to list files that tracked by git
+$ git ls-files
+
+# to stash untracked files or changes
+$ git stash -u
+
+# to stash all files
+$ git stash -a
+
+# to apply all stashed use
+$ git stash pop
+
+# to do stash with message, so u can use it later.
+$ git stash save "Change in simple.html - stash with message"  <--- Error: Cannot save the current work-tree state
+
+# to see what actully in a specific stash (if we have multiple stashs) use
+$ git stash show stash@{index#}
+
+# if u wanna to apply specific stash on ur working dirctory.
+$ git stash apply stash@{index#}
+# remember to drop the specific stash # after using the command above.
+
+# if u decide to clean stash queue <for example not needed > use
+$ git stash clear
+
+The upcoming scenario is to use one file in stage area, two files in working area, one file untracked.
+
+# to add your stash to new branch.
+$ git stash -a
+# Please delete this file <sh.exe.stackdump>
+$ git stash branch <branch name>
+
+# to use git tagging we have multiple commands
+$ git tag <tag name>
+$ git tag --list  
+$ git tag --delete <tag name>
+
+# to create tag with some kind of message, annotated, we can use.
+$ git tag -a <tag name>  ---> it will open editor to put ur message.
+
+# to view the tag notes or message,
+$ git show <tag name>
+
+# to compare particular tags
+$ git diff <tag name1> <tag name2>
+
+# if u wanna to update specific commit in history
+$ git tag -a <tag name> <commit id>
+
+# if u wanna to update tag, if by mistake u tagged the wrong commit.
+$ git tag -a <tag name> -f <new commit id>
+
+# in case u put wrong message with git commit and u wanna to fix it.
+$ git commit --amend -m <new message>
+
+# to modify the old commit message
+$ git rebase -i HEAD~3
+
+# if u wanna after the target commit ID, all the file or changes will move to staging area.
+$ git reset --soft <commit id>
+
+# if u wanna after the target commit id, all the file or changes will move to the working area.
+$ git reset <commit id>
+
+# No data will left for recover.
+$ git reset --hard <commit it>
+
+# if we use reset --hard and we wanna to recover and track the changes that had been lost because of this reset. <about 30 days>
+$ git reflog  <--- by this command u can review the reference log for git and find the commit id that u need to recover :)
+
+# to move the git HEAD to specific commit id
+$ git checkout <commit id>
+
+# if for any reason have a lot of files and directories that had been created at some time in the git project directory and they are untracked files.
+# if we need to clean or git project directory.
+$ git clean -df
+
+================================================================End Of Git Phase==================================================
+
+=============================================================== Build Tool: Maven=================================================
+
+# there are many build tools, maven, gradle and ant. we will use maven in this course
+
+# to verify if the maven is already installed in ur machine.
+$ mvn -v
+
+# if the command return back any data that's mean it's already installed, if not that's mean it's not installed yet
+# to install maven u need to check first if the java already installed and running in ur machine.
+$ java -version
+
+# then go to google to download the binary type of maven <apache-maven-3.6.1-bin.tar.gz> for example.
+# unzip the file above.
+# move the unzipped file to Applications
+$ mv apache-maven-3.6.1 /Applications/
+$ cd /Applications
+
+# now we need to configure maven on this machine.
+#- we need to create environment variable <M2_HOME> inside the bash profile.
+$ cd /Users/mustafaalogaidi/
+$ ls -a  ---> coz the bash profile is a hidden file. we are looking for this file <.bash_profile>
+$ open -e .bash_profile
+
+# add the line below to the profile...
+> export M2_HOME=Applications/apache-maven-3.6.1
+> export PATH=$PATH:$M2_HOME/bin
+# now save the changes that u put in the bash profile and close it.
+# to check that all changes had been saved.
+$ cat .bash_profile
+
+--------------------------------------------------------------------Example--------------------------------------------------------
+
+# to create project with maven
+# create new directory for the new project !!!
+$ mkdir <dir name>
+$ mvn archetype:generate  <--- this command will download the templates of maven project on ur machine.
+
+# for our example we will hit enter for the most options except the options below:
+#- groupId, Value: com.testing.sample
+#- artifactId, Value: MySampleMavenProject  <-- project name
+#- version, Value: 1.0-SNAPSHOT
+
+# if pom.xml file deleted form the project, this project will not be compiled. it's the heart of the project.
+
+# inside the project u will see also <src> folder, in side this folder u will see 2 folders <main> and <test>
+#- main folder is dedicated for developing code.
+#- test folder is dedicated to unit test code.
+
+# now at this point it's mandatory to import this project to eclipse but before we need to do some change to make it compatible with eclipse, by fire some commands to ensure this.
+$ cd MySampleMavenProject
+$ mvn eclipse:eclipse
+
+# to check if the process above success use
+$ ls -a  ==> u should see these files <.classpath and .project> if so that's mean the project is ready to be imported into eclipse.
+
+# go to eclipse --> file --> import --> general --> existing project into workspace --> next --> brows for ur project --> finish
+
+# maven build life cycle
+
+#- validate, to validate the structure of the project that had been generated by maven.
+# u need to be inside the project directory.
+$ ls -l  ==> u will also see new directory here <target>
+$ cd /Users/mustafaalogaidi/Desktop/JavaProjectTraining/MySampleMavenProject
+$ ls
+$ mvn validate
+
+#- compile
+# we will remove the default classes in the project under main and test and will create new java classes.
+$ mvn compile
+
+#- test
+$ mvn test
+
+#- package
+$ mvn package
+
+# to verify that our project had been built...
+$ cd target  <-- and u will find this for ex = MySampleMavenProject-1.0-SNAPSHOT.jar
+
+#- clean
+$ mvn clean
+
+# all dependencies and support plugins are defined in the pom file.
+# all dependencies resolved during the compilation which mentioned in pom file.
+
+# if u wanna to add another dependency to ur project, u will add this in the pom file in the part of <dependency> for example <log4j maven>
+# from google search about <log4j maven> 
+# go to the site and u can select for example <Apache Log4j » 1.2.16>
+# then copy the dependency. 
+# inside the dependencies in pom file paste the dependency above. :)
+
+$ mvn clean package
+
+# after the command above u need to check the Referenced libraries, if u don't see the library above no problem, u can follow the steps below to check. 
+# go to the eclipse --> <my project> --> R.C. ---> properties --> java build path --> libraries --> double click on the M2_Repo... to find the path.
+
+$ cd /Users/mustafaalogaidi/.m2/repository
+$ ls
+$ cd log4j/
+$ cd log4j/
+$ ls  --> u can see this version 1.2.16
+
+#- install  <-- not used yet and need to check google to find out how we can use this command!!!
+$ mvn install
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ Python with Maven +++++++++++++++++++++++++++++++++++++++++++++++++
+
+# in eclipse --> help --> install new software --> work with <http://pydev.org/updates> --> Enter --> select pydev
+# after installation and restart eclipse complete --> file --> new --> other --> pydev --> pydev project --> click on please an interpreter before proceeding
+# --> <add the path to the python> for example </anaconda3/bin/python3.6> 
+# after finish the process above select the interpreter and ok
+
+# please advise that this part still under development, there's another plugin can be used!!!
+
+
+=========================================================== End Build Tool: Maven ================================================
+
+=================================================================== Jenkins ======================================================
+
+
+------------------------------------------------------------Install Jenkins on Linux----------------------------------------------
+
+# the only pre-request to install jenkins is java, it must be installed on the machine we will use linux ubuntu.
+
+# to check ubuntu version
+$ lsb_release -a
+
+# verify java on a machine 
+$ java --version
+
+# to install java in order to execute jenkins war file we will use these commands
+$ sudo add-apt-repository ppa:webupd8team/java   <-- I have issue with this command 
+$ sudo apt-get update
+$ sudo apt-get install oracle-java8-installer
+$ sudo apt-get install oracle-java8-set-default
+
+# working with linux later since we have an issue with one of the commands above
+
+------------------------------------------------------------Install Jenkins on Windows---------------------------------------------
+
+# download jenkins for windows from  --> https://jenkins.io/download/
+# in the jenkins official site u'll note that there's 2 options:
+#- LTS is mean Long-Term Support --> that's mean it's stable version.
+#- weekly is mean not sure it's completely tested and ready.
+
+# from the LTS down load --> Generic java package (.war)
+# although we have a windows option but we will download (.war) file to use jenkins as a service in our machine.
+
+# copy the downloaded file <jenkins.war> to any folder u want for example <c:/jenkins_server/jenkins.war>.
+
+# now we need to check if java exist in our machine.
+> java -version  --> it must be 1.8.x 
+
+# if u wanna to open command prompt in a specific folder 
+> target folder > address bar above put cmd and hit enter!!! :)
+> java -jar jenkins.war --httpPort=9090  --> if it's running successfully u'll get this prompt
+# <INFO: Jenkins is fully up and running>
+# in case u need to use the default port for jenkins which is 8080, use the command above like follow:
+> java -jar jenkins.war    :)
+
+# now to access jenkins u need to use ur computer ip
+> ipconfig
+
+http://<urip>:9090
+
+# now u'll prompted to enter adminstrative password, that u get it from 
+$ cat <C:\Users\v435431\.jenkins\secrets\initialAdminPassword>  <---for example
+> in this project our url will be http://10.248.238.51:9090/
+
+# u need to install the suggested packages.
+
+
+------------------------------------------------------------Install Jenkins on MAC----------------------------------------------
+
+# download jenkins for MacOs from  --> https://jenkins.io/download/
+# in the jenkins official site u'll note that there's 2 options:
+#- LTS is mean Long-Term Support --> that's mean it's stable version.
+#- weekly is mean not sure it's completely tested and ready.
+
+# from the LTS down load --> Generic java package (.war)
+# although we have a MacOs option but we will download (.war) file to use jenkins as a service in our machine.
+
+# copy the downloaded file <jenkins.war> to any folder u want for example </jenkins_server/jenkins.war>.
+
+# now we need to check if java exist in our machine.
+$ java -version  --> it must be 1.8.x , Or u can use the command below
+$ javac -version
+
+# to run jenkins u need to submit the command below
+$ java -jar /jenkins.war --httpPort=9090  --> if it's running successfully u'll get this prompt
+# it will start unpackaged the war file
+# it will create directory <.jenkins> in user home directory
+# <INFO: Jenkins is fully up and running>
+
+# now to access jenkins u need to use ur computer ip
+$ ifconfig
+
+http://<urip>:9090
+
+# now u'll prompted to enter adminstrative password, that u get it from 
+$ cat </Users/mustafaalogaidi/.jenkins/secrets/initialAdminPassword>  <---for example
+# or through the unpacking process above u will get prompt said <please use the password below> !!! :)
+> in this project our url will be http://10.120.65.233:9090/
+
+# u need to install the suggested packages.
+
+
+----------------------------------------------------------Start Working With Jenkins--------------------------------------------
+
+# start ur jenkins server using
+$ java -jar jenkins.war <--httpPort=9090>    --> port is optional default port is 8080
+> localhost:9090
+
+# in the jenkins menu side
+#- new item = create new job --> used to start new job.
+#- people used to configure users and groups. 
+#- Build history will be used to get build history of the job.
+#- manage jenkins is used for manage plugins and many other configuration.
+#- my viwe is used to create my own dashboard.
+#- to create new view for urself.
+
+# at this poing we will select the FreeStyle Project, which is the most flexible template in the Jenkins
+
+# in the job configuration 
+#- General
+ #-- Discard old builds, it's used to discard old builds.that's mean to remove old builds of the job from build history.
+ #-- GitHub project, we need to provide github url from where we need to pull the code once we execute the job.
+ #-- This build requires lockable resources, 
+ #-- This project is parameterized, if the project accept parametrs we can provide these parametrs here.
+ #-- Throttle builds, this option will be used to set the maximum build in parallel per a specific period.
+ #-- Disable this project, if this option set, that's mean nobody will be able to execute this project.
+ #-- Execute concurrent builds if necessary, <Please keep this check box checked>, it's allow morethan one job in a paralle in the same time.
+#- Source Code Management
+ #-- None
+ #-- Git, we need to provide git url with creds as well.
+ #-- Subversion, use to pull code from the SCM like apache subversion.
+ # if u need to use another source code not in the list then u need to install it's plugin. :)
+#- Build Triggers
+ #-- Trigger builds remotely (e.g., from scripts), by this option i can trigger build remotely from another servers, using some kind of scripts or commands.
+ #-- Build after other projects are built, this particular build will be triggered after specific build had been execution.
+ #-- Build periodically, to build project periodically for a specific given period.
+ #-- GitHub hook trigger for GITScm polling, this option will be work when u enable Git opotion, whene ever u push something it will trigger build project.
+ #-- Poll SCM, using scm to trigger build project.
+#- Build Environment
+ #-- Delete workspace before build starts, it's mean clean the previous workspace.
+ #-- Use secret text(s) or file(s)
+ #-- Abort the build if it's stuck
+ #-- Add timestamps to the Console Output
+ #-- Inspect build log for published Gradle build scans
+ #-- With Ant
+#- Build, used to add build steps
+#- Post-build Actions, used to perform some actions when the build complete.
+
+# Example: Jenkins-Staging-First-Job
+ - General --> <Execute concurrent builds if necessary>
+ - Build --> Execute Shell <echo This is my first Jenkins job>
+
+--------------------------------------------------Installing Git and GitHub plugin on Jenkins-----------------------------------
+
+
+# --> manage jenkins --> manage plugins --> available --> in the filter put <Github> --> we will select Github integration --> install without restart
+# if u upgrade plugin please select <Download now and install after restart>, by this way it will not impact ur execution.
+# if u wanna to check if the plugin was installed, manage jenkins --> manage plugins --> installed 
+
+# now we need to configure maven with jenkins, to do this 
+--> manage jenkins --> global tool configuration --> --- JDK 
+							    |    |_ name  = localJDK
+							    |    |_ JAVA_HOME = C:\Program Files\Java\jdk1.8.0_201  <-- Windows
+						    	|    |_ JAVA_HOME = /Library/Java/JavaVirtualMachines/jdk1.8.0_201.jdk/Contents/Home  <-- Mac
+							    |
+							    |--- Git
+							    |    |_ name = localGit
+							    |	 |_ Path to Git executable = C:\Users\v435431\AppData\Local\Programs\Git\bin\git.exe
+							    | 	 |_ Path to Git executable = /usr/local/bin/git  <-- Mac
+						        |     
+							    |___ Gradle
+							    |    |_ name = localGradle
+							    |	 |_ GRADLE_HOME = 
+							    | 	 |_ GRADLE_HOME = /usr/local/bin/  <-- Mac
+							    |
+							    |___ Maven
+							         |_ name = localMaven
+							    	 |_ MAVEN_HOME = C:\Users\v435431\Desktop\Pivotal\apache-maven-3.6.0\
+							     	 |_ MAVEN_HOME = /Users/mustafaalogaidi/Downloads/apache-maven-3.5.3/ <-- Mac
+							    
+
+
+# for our example <Sample-Maven-Project> when we run build project it's failed at first time, coz jenkins couldn't find the pom.xml file, so we provide, hard coded the pom.xml path --> </Users/mustafaalogaidi/.jenkins/workspace/Sample-Maven-Project/java-maven-junit-helloworld-master/pom.xml>
+# to resolve this issue, coz if we try to build this project from another machine like linux, it will failed also, so to resolve this issue use
+<$workspace/java-maven-junit-helloworld-master/pom.xml>
+
+# if u put this <* * * * *> in the poll scm in build triggers, this mean check the repo every minute and build if there's any change...
+
+# Trigger builds remotely, we can use any kind of string not include ? or %. for example <mustafakamil>
+# example of url --> JENKINS_URL/job/Sample-Maven-Project/build?token=TOKEN_NAME
+# u need to do some change to the url above to be --> localhost:9090/job/Sample-Maven-Project/build?token=mustafakamil
+# if ur jenkins is ldap secure it will ask for username and password to trigger the build.
+
+# Build after other projects are built, u can use project or multiple project separated by comma. 
+
+# GitHub hook trigger for GITScm polling, it's mean if any developer commit any changes that will trigger the build job asap. but we need first to setup GitHub hook!
+
+# to check the code quality with Jenkins we will use check style report ---> used for java.
+
+# to add the check style report, we need to add this in the build section for ur project. --> goals --> clean install checkstyle:checkstyle
+# also u need to select something in the post-build Actions section --> publish checkstyle analysis result.
+
+# there's also another good plugins for code quality check for java  developer like PMD , FindBugs 
+
+# to archive artifact in jenkins --> configuration --> Post-build Actions --> archive artifact --> use **/* <which is mean all files in the workspace>  or only jar like **/*.jar
+
+# <Project Sample-Maven-Project> configuration:-
+
+ - General -- Discard old builds -- Strategy --> Log Rotation
+							    |- Days to keep builds --> 2
+							    |- Max # of builds to keep --> 5
+
+ - Source Code Management -- Git -- Repository URL --> https://github.com/mustafakamil12/Jenkins.git
+ - Build -- Invoke top-maven level maven projects -- Maven Version --> LocalMaven
+ 												  |- Goals --> 	clean install checkstyle:checkstyle
+
+ - Post-build Actions -- [Deprecated] Publish Checkstyle analysis results
+ 					  |- archive the artifacts <**/*.jar>
+
+
+--------------------------------------------------------Installing Tomcat as staging env.---------------------------------------
+
+
+# Tomcat is an open source web-server and provides a pure java http web server environment in which java code can run.
+
+# we need to install Tomcat in ur computer
+
+# Tomcat default port is = 8080
+
+# cd /Users/mustafaalogaidi/Downloads/apache-tomcat-8.5.29/apache-tomcat-8.5.29-staging/bin
+
+# to start tomcat 
+
+$ ./startup.sh
+
+# to stop tomcat
+
+$ ./shutdown.sh 
+
+# to avoid the conflict of ports between jenkins and tomcat we need to do some change, go to the <conf> directory for the tomcat.
+# </Users/mustafaalogaidi/Downloads/apache-tomcat-8.5.29/apache-tomcat-8.5.29-staging/conf>
+# find the file name server.xml
+# in the server.xml look for <connector> under service name <catalina>
+# we used in our tomcat, port = 8081
+# now use this url <localhost:8081>
+
+# now go to ur project directory and build the project with maven. 
+
+$ mvn clean package
+
+# after build complete u need to copy the war file in the target directory to the tomcat directory in <webapps> directory.
+
+# restart tomcat again.
+
+# in the url use <http://localhost:8081/java-tomcat-maven-example/index.jsp>
+
+# if u make any change in the file index.jsp for example to test how the tomcat will behave, it will reflect nothing until u build the project again.
+# then u need to copy the war file to the tomcat ---> webapps again, also u need to restart tomcat :) and then u can see the changes...:)
+
+# now we need to get jenkins do the rest of the job here, I mean to start stop and restart Tomcat, so we need first some creds to make the jenkins deploy the call.
+
+# the target file is in /tomcat/conf/tomcat-users.xml  --> go to the end of the file.
+
+# if the <role rolename  is commented please remove comment.
+
+# roles must be look like below
+
+  <role rolename="manager-script"/>
+  <role rolename="admin-gui"/>
+  <user username="tomcat" password="tomcat" roles="manager-script,admin-gui"/>
+
+# in jenkins we need to add more 2 plugins, they will be used to deploy artifacts.
+ #- copy artifact
+ #- deploy to container
+
+# if u forgot ur jenkins username and password go to 
+$ cd /Users/mustafaalogaidi/.jenkins/users/mustafa_6337081533390694085
+$ subl config.xml
+# u can see the username but the password is already encrypted u can bypass this issue by modifying the <config.xml> in the <.jenkins> directory
+<useSecurity>true</useSecurity>  ==> <useSecurity>false</useSecurity>
+
+# keep in mind that u will create first job which is responsible for creating and deploy war file, then we need another job to deploy this war file to tomcat.
+
+# in our example we will use <Packer_Servlet_Project> --> <Deploy-Servlet-Staging-Env> ---------> <Deploy-To-Prod>
+													  |_> <Static Analysis-Servlet Application>
+
+ <<Packer_Servlet_Project>> configuration:-
+ - General -- Discard old builds --> true
+ 		   |- Strategy -- Log Rotation 
+           |- Days to keep builds -- 2
+           |- Days to keep builds -- 5
+
+ - Source Code Management -- Git -- Repositories --> <https://github.com/mustafakamil12/java-tomcat-maven-example.git>
+ - Build Environment -- Delete workspace before build starts
+                     |- Add timestamps to the Console Output
+
+ - Build -- Invoke top-level maven targets -- Maven Version -- localmaven
+                                           |- Goals -- clean package
+
+ - Post-build Actions -- archive the artifacts -- Files to archive  --> **/*.war
+ (parllel builds type) |- build other projects  -- Projects to build --> Deploy-Servlet-Staging-Env,Static Analysis-Servlet Application
+                      						    |- Trigger only if build is stable
+
+ <<Deploy-Servlet-Staging-Env>> configuration:
+ - General -- Discard old builds --> true
+ 		   |- Strategy -- Log Rotation 
+           |- Days to keep builds -- 2
+           |- Days to keep builds -- 5
+
+ - Build Environment -- Delete workspace before build starts
+                     |- Add timestamps to the Console Output
+
+ - Build -- copy artifacts from another project -- Project name -- Packer_Servlet_Project
+ 											    |- Which build -- Latest successfull build
+ 											    |- Stable build only
+ 											    |- Artifacts to copy -- **/*.war
+ 											    |- Fingerprint Artifacts
+
+ - Post-build Actions -- Deploy war/ear to container -- WAR/EAR files -- **/*.war
+ 					  |								 |- Containers -- Tomcat 8.x Remote -- Credentials -- tomcat/*****
+ 					  |								                                    |- Tomcat URL  -- http://localhost:8081
+ 					  |
+ 					  |- build other projects (manual steps) -- Downstream Project Names -- Deploy-To-Prod
+ 					  
+
+ 
+ <<Static Analysis-Servlet Application>> configuration:
+ - Source Code Management -- Git -- Repositories -- Repository URL --> https://github.com/mustafakamil12/java-tomcat-maven-example.git
+ 												  
+ - Build -- Invoke top-level maven targets -- Maven Version -- localmaven
+                                           |- Goals -- checkstyle:checkstyle
+
+ 
+ <<Deploy-To-Prod>> configuration:
+ - General -- Discard old builds --> true
+ 		   |- Strategy -- Log Rotation 
+           |- Days to keep builds -- 2
+           |- Days to keep builds -- 5
+
+ - Build -- copy artifacts from another project -- Project name -- Packer_Servlet_Project
+ 											    |- Which build -- Latest successfull build
+ 											    |- Artifacts to copy -- **/*.war
+ 											    |- Fingerprint Artifacts
+
+ - Post-build Actions -- Deploy war/ear to container -- WAR/EAR files -- **/*.war
+ 					    							 |- context path --> /
+ 					   								 |- Containers -- Tomcat 8.x Remote -- Credentials -- tomcat/*****
+ 					  								                                    |- Tomcat URL  -- http://localhost:9095/
+ 
+ 	 				  
+
+---------------------------------------------------------------Build Pipelines--------------------------------------------------
+
+# if u wanna to build a pipeline u can flow up the steps below:-
+
+# --> new view --> <PipeLine> --> Build Pipeline view --> 
+													  |- Name -- PipeLine
+													  |- Pipeline flow -- Layout -- Based on upstream/downstream relationship
+													  |                |- Upstream / downstream config -- Select Initial Job --> Packer_Servlet_project  <-- where's the parent job :)
+													  |- Trigger Options -- Build Cards -- standard build card
+													  |- Display Options -- No Of Displayed Builds --> 1
+													                     |- Row Headers --> just the pipeline number
+													                     |- Refresh frequency (in seconds) --> 3
+													                     |- Console Output Link Style --> Lightbox
+
+
+--------------------------------------------------------------Pipelines as Code-------------------------------------------------
+
+
+# the target is to maintain and execute our pipeline with the help of code.
+# keep in mind the code will be used is groove and python.
+# pipeline code use DSL <Domain Specific Language>
+# now to create any jenkins code base file we will use the tree below for now.
+
+pipeline {
+    agent any 										  <-- agent mean the jenkins node, any mean any available node. <parent job>
+    stages {
+
+    	agent abc 						     Optional <-- in some cases we need to define specific node for specific stage, in this one we use <abc> (this is a child job)
+
+        stage ('Initialize') {
+            steps {
+                echo  "Initializing the Code File"    <-- anything can be in the steps...
+            }
+        }
+
+        stage ('Build') {
+            steps {
+                echo 'Hello World'				      <-- anything can be in the steps...
+            }
+        }
+
+        agent xyz						     Optional  <-- in some cases we need to define specific node for specific stage, in this one we use <xyz> (this is a child job)
+
+         stage ('Deploy') {
+            steps {
+                echo 'Deployed an Artifact'           <-- anything can be in the steps...
+            }
+        }
+    }
+}
+
+# if u see this command in the steps < sh ''' > that's mean it's a shell file.
+# after creating the new file, u need to push this file to git hub.
+# now before start working on jenkins file inside jenkins, we need to ensure that pipline plugin already installed <on installed tab> in the jenkins.
+# at this time we will not going to select <Freestyle Project> but we are going to select <Pipeline>
+# when u add new stage, at jenkins u can notice that there's no history for the new stage that had been added.
+
+# now we will going to code the pipeline for packer_servlet_project.
+# first of all the packer_servlet_project is a free style project, now we need to convert this to a pipeline project.
+# the best way to do this is create new project rather than convert the existance one. 
+
+# in this case we will select <Pipeline> instead of <Freestyle Project>
+
+# take a look on the code below
+
+pipeline {
+    agent any
+    stages {
+        stage ('Build Servlet Project') {
+            steps {
+                /*For windows machine */
+                //bat  'mvn clean package'
+
+                /*For Mac & Linux machine */
+               sh  'mvn clean package'
+            }
+
+            post{									  <-- This line mean post-build action
+                success{							  <-- This is a condition, if the build success start execute the lines below.
+                    echo 'Now Archiving ....'
+
+                    archiveArtifacts artifacts : '**/*.war'
+                }
+            }
+        }
+
+# for more detail about the jenkins file and how u can use it please see this url <https://jenkins.io/doc/book/pipeline/jenkinsfile/>
+
+# the code below is a real pipeline 
+
+pipeline {
+    agent any
+    stages {
+        stage ('Initialize') {
+            steps {
+                echo  "Initializing the Code File"
+            }
+        }
+
+        stage ('Build') {
+            steps {
+                echo 'Hello World'
+            }
+        }
+
+         stage ('Deploy') {
+            steps {
+                echo 'Deployed an Artifact'
+            }
+        }
+
+    }
+} 
+
+<Packer_Servlet_Pipeline> configuration:     <-- Pipeline
+ - General -- Discard old builds --> true
+ 		   |- Strategy -- Log Rotation 
+           |- Days to keep builds -- 2
+           |- Days to keep builds -- 5
+
+
+ - Pipeline -- Definition --> Pipeline script from SCM
+ 						  |-  SCM -- Git
+ 						  |-  Repositories -- Repository URL
+ 						  |                |- https://github.com/mustafakamil12/java-tomcat-maven-example.git
+ 						  |
+ 						  |- Script Path -- Jenkinsfile_test
+ 						  |- Lightweight checkout -- true
+
+
+
+<Deploy-StagingArea-Pipeline> configuration:  <-- Freestyle project
+ - General -- Discard old builds --> true
+ 		   |- Strategy -- Log Rotation 
+           |- Days to keep builds -- 2
+           |- Days to keep builds -- 5
+
+ - Build Environment -- Delete workspace before build starts
+ 					 |- Add timestamps to the Console Output
+
+ - Build -- copy artifacts from another project -- Project name -- Packer_Servlet_Pipeline
+ 											    |- Which build -- Latest successfull build
+ 											    |- Stable build only
+ 											    |- Artifacts to copy -- **/*.war
+ 											    |- Fingerprint Artifacts
+
+ - Post-build Actions -- Deploy war/ear to container -- WAR/EAR files -- **/*.war
+ 					  |								 |- Containers -- Tomcat 8.x Remote -- Credentials -- tomcat/*****
+ 					  |								                                    |- Tomcat URL  -- http://localhost:8081
+ 					  |
+ 					  |- build other projects (manual steps) -- Downstream Project Names -- Deploy-To-Prod   <-- may be need to remove
+ 					  
+
+
+ <Deploy-To-Prod> configuration:
+ - General -- Discard old builds --> true
+ 		   |- Strategy -- Log Rotation 
+           |- Days to keep builds -- 2
+           |- Days to keep builds -- 5
+
+ - Build -- copy artifacts from another project -- Project name -- Packer_Servlet_Pipeline
+ 											    |- Which build -- Latest successfull build
+ 											    |- Artifacts to copy -- **/*.war
+ 											    |- Fingerprint Artifacts
+
+ - Post-build Actions -- Deploy war/ear to container -- WAR/EAR files -- **/*.war
+ 					    							 |- context path --> /
+ 					   								 |- Containers -- Tomcat 8.x Remote -- Credentials -- tomcat/*****
+ 					  								                                    |- Tomcat URL  -- http://localhost:9095/
+ 
+
+# now let's create new view 
+
+# --> new view --> <Pipeline as Code> --> List View -- jobs -- Packer_Servlet_Pipeline
+															|- Deploy-StagingArea-Pipeline
+															|- Deploy-To-Prod-Pipeline
+
+
+
+# we had been create 2 jobs one was <Deploy-Servlet-Staging-Env> and the other one was <Deploy-Servlet-Staging-Env>, now we have 2 choices here,
+# either we going to use the old jobs or create new jobs for the pipeline as code.
+# here we are going to create new jobs :)
+# when u create new job and u need this new job to be like a copy of an existin job, just use the <copy form> in the bottom of the creating page...
+# for staging job we will change only the <project name> in <build environment tab> to our pipeline project.
+# u also need to add the new job to ur pipeline view :)
+# any job in the pipeline failed, all the pipeline will be marked as failed.
+# sometime, when u do some changes to <index.jsp> for example and run the job in jenkins but u don't any changes reflected to the page, only u need to 
+# restart the tomcat.
+
+# to check any syntax for pipeline code check google <pipeline as code with jenkins>
+
+
+-------------------------------------------------------------Distributed Builds-------------------------------------------------
+
+-----------------------------------------------------------Create Master on Cloud-----------------------------------------------
+
+
+# Master :
+ 1. Schedule Build Job
+ 2. Dispatches Builds to the Slave for Actual Job Execution
+ 3. Monitoring the Slave and recording the build Results.
+# Salve :
+ 1. Execute Builds Jobs dispatched by master
+
+# for this lesson, we are going to use <Digital Ocean> for testing our archeticture. we used digital ocean because it's easy to use. 
+
+# Jenkins: way to start slave
+ 1. the master can start the salave agents via SSH.
+ 2. start slave manually using java web-start.
+ 3. install the slave agents as windows service.
+ 4. start the slave directly from command line on slave machine.
+
+# when u login to digital ocean droplet, u need to use the command below, 
+ $   wget -q -O - http://pkg.jenkins-ci.org/debian/jenkins-ci.org.key | apt-key add -  
+ $   echo deb http://pkg.jenkins-ci.org/debian binary/ > /etc/apt/sources.list.d/jenkins.list     
+ $   apt-get update     
+ $   apt-get install jenkins
+
+ #   the command above may be failed due to failed to install and start Jenkins then u need to use the command below
+ $   apt-get install jenkins=2.67 
+ 
+ #   if this command failed and the error message will be, ERROR: No Java executable found in current PATH: /bin:/usr/bin:/sbin:/usr/sbin, please use the command below.. 
+ $   ps aux | grep java    <-- to verify if the java is running.
+ $   systemctl status jenkins.service  <-- to ensure that the service is not startup.
+ $   java -version   <-- to ensure that u have java installed in the machine.
+ #   if the java is not found, then u need to install it in the cloud,
+ $   sudo apt-get install default-jre
+ $   sudo apt-get install default-jdk
+ #   again u need to check the java if it's installed or not.
+ $   java -version
+
+ #   to start jenkins 
+ $   systemctl start jenkins
+
+ #   to stop jenkins
+ $   systemctl stop jenkins
+
+ #   to check jenkins status
+ $   systemctl status jenkins
+
+ #   to restart jenkins 
+ $   systemctl restart jenkins
+
+ ------------------------------------------------------------Create Slave on Cloud-----------------------------------------------
+
+
+ # go to digitalocean and create another droplets
+
+ # we will use the list of commands below
+  $   sudo apt-get update
+  $   sudo apt-get install default-jre
+  $   sudo apt-get install default-jdk
+  $   java -version
+
+#  >>>>> Set-up Auto SSH Login <<<<<<<
+
+1. Log-in master Node and run command :
+
+ $ sudo -iu jenkins
+
+2. Generate Public & Private RSA Key. Command:
+
+ $ ssh-keygen -t rsa
+
+ # public key location : /var/lib/jenkins/.ssh/id_rsa.pub
+ # Private key location :  /var/lib/jenkins/.ssh/id_rsa
+
+
+3. Create .ssh directory on slave from master node
+
+ $ ssh root@<slave_ip> mkdir -p .ssh
+
+
+4. Attach master public key with slave authorized directory
+
+ $ cat .ssh/id_rsa.pub | ssh root@<slave_ip> 'cat >> .ssh/authorized_keys'
+
+
+
+#  >>>>> Download Slave Agent Program on Slave Machine <<<<<<<
+
+1. Create bin directory.
+
+ $ mkdir ~/bin
+
+2. Go to bin and download slave.jar from master
+
+ $ cd bin 
+ $ wget http://<master_ip>:8080/jnlpJars/slave.jar
+
+ $ free -h  <-- to check the free space on ur machine.
+ $ df -h    <-- to check all folders spaces..:)
+
+# Now to add nodes to the master jenkins, --> manage jenkins --> manage nodes --> new node --> <we can use the same slave machine name>
+
+# if the <Launch agent via execution of the command on the master> is not available in the launch method list that's mean <SSH plugin> not installed int the jenkins and u need to install it.
+
+#  >>>>> Launch Command <<<<<<
+
+ $ ssh root@<slave_ip> java -jar /root/bin/slave.jar 
+
+# btw we have only <Freestyle project> because we didn't install any plugins, so this option is by default with jenkins.
+
+# to test our works above we will create 6 jobs in each one we will use only build --> Execute shell --> sleep 10;
+
+# to use labe if needed especially when u have special work to do with slaves not with master, 
+# open master --> configure --> lable and put master.
+# open slaves --> configure --> lable and put slave
+# lable is case senstive.
+
+# open all ur jobs --> configure --> general --> Restrict where this project can be run --> put slave   <-- for example and it's case senstive.
+# run jobs one time and see what will happen. :)
+
+
+=============================================================== End of Jenkins ===================================================
+
+
+================================================================== BitBucket =====================================================
+
+# Bitbucket : Bitbucket is a web-based version control repository hosting service owned by Atlassian
+
+# we will learn these points
+ # creating bitbucket account
+ # creating a repository on bitbucket
+ # downloading and installing a bitbucket desktop application
+ # cloning ur first bitbucket repo to ur computer
+ # creating ur first bitbucket commit
+ # creating ur first push to bitbucket repo
+
+# to create bitbucket account --> google --> search for bitbucket --> go to the site --> click on get start for free --> fill info
+
+# now we need to create a repo --> dashboard --> repository --> create new repo --> 
+
+# now for bitbucket app we will use <source tree> as app. u can download it from google.
+# after installing the app, u need do some configuration.
+# first thing we need is setting our account --> sourceTree tab --> prefrences --> accounts --> add --> connect account --> use ur account for bitbucket --> grant access
+# now if u click on <local> button u'll not find anything so we need to go to next step.
+
+# to clone repo from bitbucket to our computer --> click on <remote> button it will show u all repos created early. --> clone
+
+# create a text file in the bitbucket folder on ur desktop, save it
+
+# --> add file by click the check box --> click on <commit> button --> put message --> commit
+
+# to push --> click on <push> button --> ensure that all options correct --> OK
+
+
+
+
+============================================================== End of BitBucket ==================================================
+
+=================================================================== GitLab =======================================================
+
+# Gitlab is a service that provides remote access to Git repositories.
+# You can install the GitLab runner on different operating systems,
+
+# we will cover the installation on windows.
+ − First create a folder called 'GitLab-Runner' in your system. For instance, you can create in C drive as C:\GitLab-Runner.
+ - Now download the binary for x86 or amd64 and copy it in the folder created by you. Rename the downloaded binary to gitlab-runner.exe.
+ - Open the command prompt and navigate to your created folder. Now type the below command and press enter.
+ -> C:\GitLab-Runner> gitlab-runner.exe register
+ − After running the above command, it will ask to enter the gitlab-ci coordinator URL.
+ - Enter the gitlab-ci token for the runner.
+ - To get the token, login to your GitLab account:
+   * go to your project.
+   * Click on the CI/CD option under Settings tab and expand the Runners Settings option.
+   * Under Runners Settings section, you will get the token.
+ − Enter the gitlab-ci description for the runner.
+ − It will ask to enter the gitlab-ci tags for the runner. we are going to use tag1, tag2
+ − You can lock the Runner to current project by setting it to true value.
+ − Now enter the Runner executor for building the project. we will use ===> docker
+ − Next it will ask for default image to be set for docker selector. we will used ==> alpine:latest
+ − Now go to your project, click on the CI/CD option under Settings section and you will see the activated Runners for the project.
+ - You can see the GitLab Runner configuration in the config.toml file under the GitLab-Runner folder
+
+# for Mac we will use brew command as below
+$ brew install gitlab-runner
+$ brew services start gitlab-runner 
+
+# there's another way to use gitlab, by using docker container --> this approach had been tested in mac
+
+sudo docker run --detach --name gitlab \
+--hostname gitlab.example.com \
+--publish 30080:30080 \
+--publish 30022:22 \
+--env GITLAB_OMNIBUS_CONFIG="external_url 'http://gitlab.example.com:30080'; gitlab_rails['gitlab_shell_ssh_port']=30022;" \
+gitlab/gitlab-ce:latest
+
+
+# after building gitlab server, now we need to create ssh key so anytime we need to connect to the server we will not need to provise creds.
+$ ssh-keygen
+
+# after submit the command above it will prompt u to give the folder name, make sure that u save the key in a file
+# now go to gitlab --> setting --> SSH Keys --> copy the ssh key from the created file to the highlighted space --> add key.
+
+# to create a new project --> click on the New project button in the dashboard --> git the repo a clear name.
+# now u may or may not need all the command below, but i will list all required commands from this step till the local repo will sync with remote repo.
+
+# Create a new repository:
+ - git clone ssh://git@gitlab.example.com:30022/mustafakamil/my-first-gitlab-proj.git 
+ - cd my-first-gitlab-proj 
+ - touch README.md 
+ - git add README.md 
+ - git commit -m "add README" 
+ - git push -u origin master
+
+# Push an existing folder:
+ - cd existing_folder 
+ - git init 
+ - git remote add origin ssh://git@gitlab.example.com:30022/mustafakamil/my-first-gitlab-proj.git 
+ - git add . 
+ - git commit -m "Initial commit" 
+ - git push -u origin master
+
+# Push an existing Git repository
+ - cd existing_repo 
+ - git remote rename origin old-origin 
+ - git remote add origin ssh://git@gitlab.example.com:30022/mustafakamil/my-first-gitlab-proj.git 
+ - git push -u origin --all 
+ - git push -u origin --tags
+
+# to fork a project --> go to the project --> click on fork --> add the forked project to a fork group by clicking on it.
+
+# how to Creating a Branch in gitlab:
+ - Login to your GitLab account and go to your project under Projects section
+ - To create a branch, click on the Branches option under the Repository section and click on the New branch button.
+ − In the New branch screen, enter the name for branch and click on the Create branch button
+
+# we have 2 options to add file in the gitlab
+ - web interface.
+ - command line.
+
+# let's explain how to work with web interface, coz the command line way already had been discussed early:
+ − You can create a new file, by clicking on the '+' button which is at the right side of the branch selector in the dashboard.
+ − Enter the file name, add some content in the editor section and click on the Commit changes button to create the file.
+
+# Steps for Rebase Operation:
+ − Go to your project directory and create a new branch with the name rebase-example by using the git checkout command.
+  <The flag -b indicates new branch name.>
+ - Now, create a new file and add some content to that file as shown below.
+  $ echo "Welcome to TutorilasPoint" >> rebase_file.md
+ - Add the new file to working directory and store the changes to the repository along with the message (by using the git commit command).
+ - Switch to the 'master' branch. by using the git checkout command.
+ − Next, create an another new file, add some content to that file and commit it in the master branch. 
+  $ echo "text in main branch" >> README.md
+
+ − Switch to the rebase-branch to have the commit of master branch.
+ - Now, you can combine the commit of master branch to rebase-branch by using the git rebase command  
+  $ git rebase master
+
+# we'll talk about Squashing commit
+#Squashing is a way of combining all commits into one when you are obtaining a merge request.
+
+# Steps for squashing commits
+ − Go to your project directory and check out a new branch with the name squash-chapter by using the git checkout command.
+  $ git checkout -b squash-chapter
+ − Now, create a new file with two commits, add that file to working directory and store the changes to the repository along with the commit messages
+
+  $ echo "message1" >> README.md
+  $ git add .
+  $ git commit -am "message1 commited"
+
+  $ echo "message2" >> README.md
+  $ git add .
+  $ git commit -am "message2 commited"
+
+ - u can use <git history> to see the preivous commits, and u'll get the below result in my example
+
+ ~/Desktop/my-first-gitlab-proj$ git history
+ * 3c17c2d (HEAD -> squash-chapter) message2 commited
+ * 9a80a57 message1 commited
+ | * cd640d5 (rebase-example) Rebase file added
+ |/
+
+ − Now, squash the above two commits into one commit by using the below command
+  $ git rebase -i HEAD~2
+
+  -> git rebase command is used to integrate changes from one branch to another and HEAD~2 specifies last two squashed commits and if you want to squash four commits, then you need to write as HEAD~4. One more important point is, you need atleast two commits to complete the squash operation.
+
+ - After entering the above command, it will open the editor in which you have to change the pick word to squash word in the second line (you need to squash this commit).
+
+----------------------------------------------------------------Gitlab CI/CD----------------------------------------------------
+
+# gitlab CI is the next wave of CI/CD, early we where use sperate application like jenkins to do the CI/CD
+# we will cover the subjects below:
+https://www.youtube.com/watch?v=34u4wbeEYEo&list=PLaFCDlD-mVOlnL0f9rl3jyOHNdHU--vlJ
+ - High level architecture
+ - Docker  ---> already explained in docker
+ - gitlab runner
+ - gitlab registry
+ - create demo application
+ - ci/cd using plain ssh (not dockerized approach)
+ - ci/cd using runner shell executer
+ - ci/cd using runner docker executer
+
+# let's imagin that we have 2 parts in our work environment 
+ - gitlab property
+ - personel
+
+			 						.------.
+									|GitLab|
+					.------------->	.------. <------------.
+			       /					|				   \
+			      v                     |                   v 
+			.------. 					|				  	.------.
+			|Runner|					|					|Runner|
+Personel	.------.					|					.------. shared
+			|Docker|					|					|Docker|
+			.------.					|					.------.
+				   ^                    |                   ^
+				    \                   v                  /
+					 .------------>	.--------. <----------.
+									|Registry|
+			             			.--------.
+
+# u can see there's only one way line from gitlab toward registry, that's because gitlab use registry to fetch what image that we have.
+# image built in docker / runner and pushed to registry not to gitlab.
+
+# if u r going to run docker <pure> some time in the image document there's away to copy the content of current folder to the target docker, for ex u can create index.html and copy it to the docker image :)
+
+ > <command> + -v "$pwd":<target>
+
+# example on building docker custom image 
+ FROM ubuntu:latest
+ apt-get -y update
+ apt-get -y install appache2
+ EXPOSE 80
+ CMD apachectl -D FORGROUND
+
+# to run gitlab-runner use
+ $ sudo gitlab-runner --help
+ $ sudo gitlab-runner register
+  - it will ask u about the coordinator, for ex > https://gitlab.com/
+ > get the token from the gitlab 
+ > the a description
+ > for gitlab tags, is u have these tags, 
+  stage,qa,build,deploy
+ > wether to run untagged builds  --> false
+ > executer --> shell
+
+# now to check our work go to the gitlab site --> settings --> Runners --> active runner :)
+ 
+
+
+
+================================================================ End of GitLab ===================================================
+
+
+=================================================================== Packer =======================================================
+
+# packer by HashiCorp.
+# first we need to download packer from it's site, use google, it's a zip file, unzip the file and copy it to -->
+# c:\program files\ --> create folder for packer.
+# add packer path to the <environment variables>  
+# now u need to check if the packer working 
+$ packer version 
+
+# for MacOs u need to use this command <$ brew install packer>
+
+# to write a template u'll use json file.
+# we will need also <install.sh> installation script file.
+
+# keep in mind we need <aws-access-key> and <aws-secret-key> to communicate with amazon API.
+
+# to use a specific image that u need --> AWS --> EC2 --> AMIs --> click on drop down list --> public --> images --> select one 
+# keep in mind we will use <AMI-ID>
+
+# now to build machine image
+$ packer build <path of json file>
+
+# now u need to check if the template working or not, create new EC2,
+# --> EC2 --> lunch instance --> my AMIs --> review and lunch --> be sure that traffic allowed on port 80 open --> lunch
+
+
+================================================================= End of Packer ==================================================
+
+=================================================================== Terraform ====================================================
+
+# it's an open source tool had been developed by HashiCorp,
+# it's help you u to automate the implementation of the entire infrastructure using code.
+
+# the first thing that u need is to write the configuration terra file and it's <.tf>, which use a hcl language <HashiCorp Configuration Language>
+
+# terraform have 3 steps to do in order to build the infrastructure
+ 1. check against the current infrastructure
+ 2. what resources required 
+ 3. list out the resoureces the u need to create.
+
+# if u trying to modify the current infrastructure, terraform will use to mostly the same steps.
+ 1. compare the current infrastructure with what's new in the new configuration file.
+ 2. apply changes.
+
+# after installing terraform, u need to create a user in aws with proper authientication for terraform use.
+--> aws --> IAM --> users --> add user --> <terraform-user> --> select proper group.
+
+# next step u need to download, install and configure awscli. --> check the aws lessons :)
+
+# now u need configure the profile in aws for <terraform-user> as below.
+
+$ aws configure --profile terraform-user
+
+ 1. AWS Access Key ID [None]: 
+ 2. AWS Secret Access Key [None]: 
+ 3. Default region name [None]: us-east-1
+ 4. Default output format [None]: 
+
+# now after we done with all required setting for terraform, we need to select the folder that will be our project folder.
+ $ mkdir terraform
+ $ touch production-application.tf
+
+# go to terraform website --> docs --> provider --> in our example we are going to use shared credentials example.
+
+# in our example where we create the <production-application.tf> in this path we need to use this command
+ 
+  $ terraform init  --> to initilize the provider plugins and it will create folder with required configuration
+
+# in our example we are not going to create the entire infrastructure as in the diagram, but we will do some of them.
+
+# for example for load balancer we can go to the terraform site and look into the docs for <aws_alb>.
+
+# btw in our example we didn't create the security group, we need to put this automatically in the code.
+
+# for vlsm u can use this online calculator <http://www.vlsm-calc.net/>
+
+# our example used from terraform course -- > section 2 --> lesson 3 and 4
+
+# we will work with an example from the youtube to mix terraform and jenkins... :)
+
+# requirements:
+
+ - Workspace Cleanup Plugin
+ - Credentials Binding Plugin
+ - AnsiColor Plugin
+ - GitHub Plugin
+ - Pipeline Plugin
+ - CloudBees AWS Credentials Plugin
+
+
+ # we need to create some creds before start working on the project...
+ tomcat --> username/password
+ github --> secret text
+ aws    --> aws credentials
+ github --> username/password
+
+
+
+<Terraform> configuration:   <-- Multibranch Pipeline
+ - Branch Sources -- Github -- Credentials --> ur creds to login to Github in format of username/password
+ 						    |- Repository HTTPS URL -- https://github.com/mustafakamil12/mygitops.git
+ 						    |- Property strategy -- all branches get the same properties
+
+ - Build Configuration -- Mode -- by jenkins
+     				   |- script path -- Jenkinsfile
+
+ - Orphaned Item Strategy -- Discard old items -- true
+
+
+
+-----------------------------------------------------------Terraform with DigitalOcean--------------------------------------------
+
+Terraform with droplets - digitalocean
+
+# first check if terraform had been installed in ur computer
+ $ terraform
+ 
+# make authentication with digitalocean which mean between terraform and digitalocean account
+# at this point we are looking for a token file
+# go to digitalocean --> API --> generate new token --> <give a name> --> copy ur token 
+d38f2bad15827c7d777d9dc2e5fa9709fa16ace468c2cc0e2f7ec24623d41d11  --> work computer
+fdaf9ff9d3b4f0ce16acfd87bcee1bc1af3c00d4129885e53d470e40f465bffd  --> Mac
+
+# u can use terraform documents to get the right resources for digitalocean as below:
+
+	variable "do_token" {}
+	provider "digitalocean" {
+	token = "${var.do_token}"  //referencing the token you exported using var
+	}
+	
+	resource "digitalocean_droplet" "terraform" {   //terraform is a name of the droplet
+	image  = "ubuntu-18-04-x64"
+	name   = "terraform-droplet"
+	region = "SFO2"
+	size   = "1gb"
+	}
+	
+# the code after changing the token part will been
+
+	variable "digitalocean_token" {}
+	provider "digitalocean" {
+	token = "${var.digitalocean_token}"  
+	}
+	
+	resource "digitalocean_droplet" "terraform" {   
+	image  = "ubuntu-18-04-x64"
+	name   = "terraform-droplet"
+	region = "SFO2"
+	size   = "1gb"
+	}
+
+# save the content to createdroplet.tf in ur work directory
+
+# now we need to export the token that we got from API - digitalocean 
+ $ export digitalocean_token=d38f2bad15827c7d777d9dc2e5fa9709fa16ace468c2cc0e2f7ec24623d41d11  --> Linux and Mac
+ $ set digitalocean_token=d38f2bad15827c7d777d9dc2e5fa9709fa16ace468c2cc0e2f7ec24623d41d11  --> windows
+ 
+
+# now let's start working with terraform
+ $ terraform init 
+ $ terraform plan
+	# it will ask u about the token
+ $ terraform apply
+	# enter the token 
+	# enter yes
+
+# now to destroy this droplet just use
+ $ terraform destroy
+ 
+# now if we want to install anything in the new droplet at the provisioning time, we will add some new commands.
+# The author create multiple tf files for a reason
+ 1. provider.tf
+	
+	variable "do_token" {}
+	variable "pub_key" {}
+	variable "pvt_key" {}
+	variable "ssh_fingerprint" {}
+	
+	provider "digitalocean" {
+		token = "${var.do_token}"
+	}
+
+
+ 2. web1.tf
+
+	resource "digitalocean_droplet" "web" {
+		image = "ubuntu-16-04-x64"
+		name = "web1"
+		region = "nyc2"
+		size = "512mb"
+		private_networking = true
+		#user_data = "${file("config/webuserdata.sh")}"
+		ssh_keys = [
+			"${var.ssh_fingerprint}"
+		]
+		connection {
+			user = "root"
+			type = "ssh"
+			private_key = "${file(var.pvt_key)}"
+			timeout = "2m"
+		}
+		provisioner "remote-exec"{      #it will running after provisioning process complet.
+			inline = [ 
+				#install Docker Requirement    
+				"sudo apt-get update",          
+				"sudo apt-get -y install nginx" 
+			]  
+		}
+    }                               
+	
+# now we need to repeat export token process 
+ $ export do_token=d38f2bad15827c7d777d9dc2e5fa9709fa16ace468c2cc0e2f7ec24623d41d11  --> Linux and Mac
+ $ set do_token=d38f2bad15827c7d777d9dc2e5fa9709fa16ace468c2cc0e2f7ec24623d41d11  --> windows
+
+# now we need to generate the SSH for digital ocean:
+ $ ssh-keygen -t ecdsa
+ # password: empty
+ # confirm: empty
+ $ cd /Users/mustafaalogaidi/Desktop/DigitalOcean_Terraform_SSH/.ssh
+ $ cat dokey.pub
+ # copy the public key to --> digital ocean --> account menu --> settings --> security --> add ssh key --> giv it a name
+ # now copy the MD5 that had been calculated after creating the new ssh key in D.O.
+ # now export the ssht as below
+ # export ssh_fingerprint_mac=19:2a:bd:c7:0c:8a:fd:ac:97:42:75:15:cb:56:6f:7e
+
+ # to check our keys:
+  $ echo $digitalocean_token
+  $ echo $ssh_fingerprint_mac
+
+# now we need to export the SSH of digitalocean.
+ $ export ssh_fingerprint=39:85:ea:fa:6c:d2:1f:4b:db:62:45:d2:ab:53:39:25
+ $ set ssh_fingerprint=39:85:ea:fa:6c:d2:1f:4b:db:62:45:d2:ab:53:39:25
+
+# to check the variables above
+ $ echo $do_token
+ $ echo $ssh_fingerprint
+ $ terraform init
+ 
+ $ terraform plan \
+   -var "do_token"=${DO_TOKEN} \
+   -var "pub_key"=$/c/Terraform_DigitalOcean/ssh_fingerprint.pub \
+   -var "pvt_key"=$/c/Terraform_DigitalOcean/ssh_fingerprint \
+   -var "ssh_fingerprint"=$SSH_FINGERPRINT
+ 
+ $ terraform plan -var "do_token"=${DO_TOKEN} -var "pub_key"=$/c/Terraform_DigitalOcean/ssh_fingerprint.pub  -var "pvt_key"=$/c/Terraform_DigitalOcean/ssh_fingerprint -var "ssh_fingerprint"=$SSH_FINGERPRINT
+ 
+ 
+# another way to configer the provider.tf
+
+	variable "do_token" {                                                                 
+			type = "string"                                                               
+			description = "DigitalOcean API Token"                                        
+			default = "d38f2bad15827c7d777d9dc2e5fa9709fa16ace468c2cc0e2f7ec24623d41d11"  
+	}                                                                                     
+	variable "pub_key" {                                                                  
+			type = "string"                                                               
+			description = "The Path to Your Public Key"                                   
+			default = "C:/Terraform_DigitalOcean/ssh_fingerprint_rsa.pub"                 
+	}                                                                                     
+	variable "pvt_key" {                                                                  
+	type = "string"                                                                       
+			description = "The Path to Your PrivateKey"                                   
+			default = "C:/Terraform_DigitalOcean/ssh_fingerprint_rsa"                     
+	}                                                                                     
+	variable "ssh_fingerprint" {                                                          
+			type = "string"                                                               
+			description = "SSH Key fingerprint"                                           
+			default = "39:85:ea:fa:6c:d2:1f:4b:db:62:45:d2:ab:53:39:25"                   
+	}                                                                                     
+	provider "digitalocean" {                                                             
+			token = "${var.do_token}"                                                     
+	}                                                                                     
+
+
+ 
+=============================================================== End of Terraform =================================================
+
+
+>>>> All paths required for DevOpsd <<<<<
+
+/Users/mustafaalogaidi/Desktop/java-tomcat-maven-example
+/Users/mustafaalogaidi/Desktop/starter-web
+/Users/mustafaalogaidi/Desktop/java-tomcat-maven-example/src/main/webapp
+/Users/mustafaalogaidi/Downloads/apache-tomcat-8.5.29/apache-tomcat-8.5.29-prod/bin
+/Users/mustafaalogaidi/Downloads/apache-tomcat-8.5.29/apache-tomcat-8.5.29-staging/bin
+/Users/mustafaalogaidi/Desktop/Jenkins_Server
+
+iterm
+/Users/mustafaalogaidi/Desktop/terraform
+/Users/mustafaalogaidi/Desktop/mygitops
+
+
+==================================================================== Docker ======================================================
+
+# Docker is a tool designed to make it easier to create, deploy and run applications by using containers.
+# Docker containers are lightweight alternatives to virtual machines and use the host OS.
+# You don't have to pre-allocate any RAM in containers 
+
+														 .- Stable  <-- release every quarter 
+								.- Community  --> Free --|
+# there's 2 flavor for docker --| 						 .- edge release   <-- come with lates technologies not been tested yet/monthly
+								.- Enterprise --> Paied
+
+
+# docker edition available at <store.docker.com>
+
+						.- CE = Community Edition
+# docker abbreviation --|
+						.- EE = Entrprise Edition
+
+						  .- Linux   (naitivly support docker)
+# major type of install --|- Mac/Win (set of toolbox)
+						  .- Cloud   (AWS/Azure/Google)
+
+
+# we will start with installing docker on windows 10 Pro/Ent Edition.
+ - first u need to go to this link https://store.docker.com to download the docker image --> brows popular image. 
+ - we will use the community edition
+ - use the stable image
+ - follow the instruction.
+ 
+# now if u wann to install docker on server 2016 u need to do the following steps.
+ - go to this link https://store.docker.com
+ - use docker EE 
+ - select windows.
+ - follow the instruction.
+
+# to install docker on mac all u need just go to https://store.docker.com and download docker, follow up instructions.
+# to verify docker on ur terminal
+$ docker version
+
+# if u restart docker and run the command above u will see only the client info, since mac don't support docker natively.
+# client is running on ur machine
+# server is running on linux core.
+
+-----------------------------------------------------------Create Machine on Cloud----------------------------------------------
+
+# Digital Ocean
+# Memory: 2GB , vCPUs: 2, Disk: 60GB, Transfer: 3TB  --> Name: DockerMachine
+
+# this will be used as cloud for docker.
+# ssh to the new machine using username and password the u got by email :)
+# to double check that u r in the correct machine use
+$ hostname
+
+# we will skip installing docker for windows for now.  <<<<<<<=========
+
+# we will skip installing docker for Linux for now.  <------- and we will use it in docker swarm cluster
+
+--------------------------------------------------------------Docker Container--------------------------------------------------
+
+# docker cli = docker client
+# docker engine = docker server
+
+* btw in this course he will use machine in cloud to run docker.
+
+# to get the machine name
+$ hostname
+
+# to find the docker version
+$ docker version
+
+# to verify docker engin setup and details
+$ docker info
+
+# to list all docker commands
+$ docker
+# the result will come up wiht 2 segments of commands 
+
+ - Management commands
+ - commands  <-- early 2017 u will get only this segment.
+# docker community relize that there's alot of commands and there's a confusion, so they split them to 2 segments. :)
+
+# docker management commands format
+# docker <command> <sub-command> (optional)
+
+--------------------------------------------------------Start Working with Container--------------------------------------------
+
+
+# --> Docker --> Container --> Image
+
+# in this lec we will use open source Nginx web-server and docer central repository
+# http://hub.docker.com   --> it's a centeral repo for to push our image or get public image.
+# if u looking for official image u will see this lable on the image <official>
+
+# now u need to execute this command.
+$ docker info
+
+# docker container run hello-world    <-- this command will look into local repo if the image not available it will pull the image from the docker hub.
+
+# if u repeat the command above again u wil see that the image availabe in the local repo.
+
+# now we need to run Nginx web-server in the docker 
+# > docker container run --publish <host_port:container_port> <image name>
+$ docker container run --publish 80:80 nginx
+
+# to exit out of ur container just submit CTRL+C
+
+# process behinde the sceen
+ - download the image from docker hub
+ - started new container
+ - exposed port 80 on host machine
+ - rout traffic to the container port 80
+
+# keep in mind the command above will run on the forground.
+# if u need to rung Nginx on the back ground.
+# > docker container run --publish <host_port:container_port> --detach <image name>
+$ docker container run --publish 80:80 --detach nginx 
+
+# the command above will return a container id, for ex <84136aa7c786c92bd5c08c52f45e16da9c8ddf5a35809b28cefcd950012c27df>
+# now check ur browser again to ensure that the nginx working 
+
+# if u wanna to run another server with different port u can use 
+$ docker container run --publish 8087:80 --detach nginx   <-- example
+<9d258d465b37535782716e98df07700851b26e00e8e4dd07d8fd5935090fb8e6>
+
+# now if u wanna to list all running containers on ur machine.
+$ docker container ls
+
+# to stop container
+$ docker container stop <container_id>
+# after submit the command above it will return the container id that u used..
+
+# to list all running and stopped containers
+$ docker containers ls -a
+
+						   .- run    --> start a new container always.
+# run vs start container --|
+						   .- start  --> start an existing container.  > docker container start <container_id>
+
+# if we wanna to provide a meaningful name to our container
+> docker container run --publish 80:80 --detach --name <name> <image_name>
+
+# now to see the log for a specific container 
+> docker container logs <container_name> / <container_id>
+
+# to see process running inside ur container.
+> docker container top <container_id>
+
+# to remove the unwanted containers use
+> docker container rm <container_id 1> <container_id 2> ... <container_id etc>
+
+# u can't remove running container, u will get error and ask u to stop the container.
+
+# if u r sure that u wanna to remove a running container in this case use -f --> force
+> docker container rm -f <container_id>
+
+# let's take a look on the internal process when we run a container.
+ - looks for the image in the image cache
+ - then looks in the remote docker repo <default hub.docker.com>
+ - download the latest version of the image.
+ - create new container based on the image.
+ - gives it a virtual IP on private network inside docker engine.
+ - open port 80 on host machine and rout to port 80 inside container.
+ - start container by using CMD in imager docker file.
+
+# keep in mind the containers virtualize the O.S. but the vms virtulize the hardware.
+
+# if for example we are looking for how many processors working on a host machine.
+$ ps aux
+
+# if u wanna to stop container u can use 3 or 4 first digits of container id and docker will verify the rest.
+
+# if u wanna to explor docker commands u can use the command below:
+$ docker --help
+
+
+-----------------------------------------------------------------Assignments----------------------------------------------------
+
+# The docker assignment:- 
+ - run nginx, mysql and apache server
+ - all containers must run in background
+ - provide name to all containers
+ - start nginx on port 80:80
+ - start mysql on port 3306:3306
+ - start apache server on port 8080:80   --> u will find the search result it's name httpd :)
+
+# let's start with nginx
+$ docker container run -d -p 80:80 --name proxyserver nginx  <-- the first port will be open on the host machine and the second port on the container.
+
+# -d == --detach and -p == --port 
+
+# let's start now the apache server
+$ docker container run -d -p 8080:80 --name webserver httpd
+
+# let's start now the mysql server, there's some notes we need to take care of.
+ - use --env to pass the environment variable (MYSQL_RANDOM_ROOT_PASSWORD=yes)
+ - use docker container logs command on mysql to find the random password created on start-up
+$ docker container run -d -p 3306:3306 --name mysqldb --env MYSQL_RANDOM_ROOT_PASSWORD=yes mysql
+$ docker container logs mysqldb  --> to get the password (thiephohLahkohk6eepaweexaxohh8ea)
+
+---------------------------------------------------------------CLI Monitoring---------------------------------------------------
+
+# to see what's going inside the running container
+$ docker container top <continer_id/container_name> --> procees list in the container
+
+# the old fashon of <docker container ls> is <docker ps> 
+
+# to get the details about a container configuration
+$ docker container inspect <continer_id/container_name>  ==> The result will be a json file :)
+
+# to get performance states on all containers
+$ docker container stats 
+
+# if u waana to get inside a container and do so modification.
+# the first step we need to run the container in <interactive mode>
+> docker container run -it --name <container_name> <image_name> <command> --> to get more help <docker container run --help>
+$ docker container run -it --name webproxy nginx bash
+# to exit just use
+$ exit ---> and hit enter
+# as soon as u exit this kind of container, container will be stop running.
+
+# to see the interactive container use <docker container ls -a>
+
+# now the challenge is how to execute command inside a running command :)
+> docker container exec -it <continer_id/container_name>  <command> --> open running container interactivly.
+
+$ docker container exec -it proxyserver touch /tmp/mustafa
+$ docker container exec -it proxyserver bash
+# now let's run new container as ubuntu.
+$ docker container run -it ubuntu bash
+# because of the distro above is very light so we need to install the full package
+$ apt-get update
+$ apt-get install curl
+# curl https://www.facebook.com
+
+> docker exec  											  			--> run new command in a running container.
+
+-------------------------------------------------------------Docker Networking--------------------------------------------------
+
+# it will be unusful to use docker individually. 
+# each container connect to virtual private network called "bridge".
+# bridge is a docker default network driver <software>.
+# containers on same bridge can communicate with each other without port. 
+# containers in different bridges can't talk to each other.
+# u r allow to create multiple VPN in docker.
+# u can create multiple rules for single network.
+# u can attach multiple containers to one network, u can attach one container to multiple networks and u can do no attach for a container to any network.
+
+# to start container with allowing traffic from port on host machine.
+> docker container run -p <host_port> : <docker_port> -d image
+
+# to find traffic and protocol on a container.
+> docker port <container_id>
+
+# to find docker container ip
+> docker inspect <container_id>
+
+# ex:
+$ docker container run -p 8080:80 -d nginx
+$ ifconfig en0  <-- to get host machine ip
+> copy the ip to the browser with host port --> <192.168.0.10:8080>
+$ docker container port <container_id>
+$ docker container inspect <container_id>  --> look for the "NetworkSettings" OR
+$ docker container inspect -f '{{.NetworkSettings.IPAddress}}' e87c32600469    <-- container_id
+
+# to list all available networks that the engine daemons knows about.
+$ docker network ls
+
+# to use filter for example to filter all bridges' networks
+$ docker network -f drive=bridge
+
+# to find all network IDs and drivers
+$ docker network ls format "{{.ID}}:{{.Driver}}"    <-- it will return data in format of json.
+
+# to get help on network command use
+$ docker network --help
+
+# to inspect any network
+$ docker network inspect <network_id>  <-- returns information about one or more network in the format of json
+
+# to create new network on a host machine.
+$ docker network create <network_name> --> by default it will create a "bridge" network
+
+# to create a bridge network 
+$ docker network create -d bridge <bridge_name>
+
+# now to connect a network with a container.
+> docker network connect Network1 Container1   <-- container1 can by id or name.
+
+# take a look on this example, this formula used when running container first time and we need to connect it to a network:
+$ docker container run -p 8085:80 -d --name my_nginx --network myNetwork nginx  
+
+# the next step u need to inspect both the network and then the container.
+
+# now to connect a running machine to a network
+$ docker network connect myNetwork kind_archimedes 
+$ docker network inspect myNetwork
+$ docker container inspect kind_archimedes <-- at this point u will see that this container had been connected to 2 networks
+
+# to disconnect a container from a network use
+> docker network disconnect Netowrk1 Container1
+$ docker network disconnect bridge kind_archimedes
+
+# if u disconnect a container from all networks, that's mean u will not be able to contact this container.
+
+# containers use DNS to communicate.
+# containers don't use IPs to communicate, instead they are using DNS.
+$ docker container ls
+$ docker network ls
+$ docker network inspect myNetwork  <-- <myNetwork> is the name of the bridge that we already created.
+
+# to use alpine version
+$ docker container run -d --name mynginx_alpine_1 --network myNetwork nginx:alpine
+
+# we will create 2 containers alpine and connect them both to the <myNetwork> then we will try to ping from container to another.
+$ docker container exec -it mynginx_alpine ping mynginx_alpine_1
+
+
+# why containers don't use IPs to communicate with each others because IPs are static in the container.
+# and when u stop contaienr and start a new one, it may be using the same IP.
+
+---------------------------------------------------------------Docker Images----------------------------------------------------
+
+# image is a combination of a file system and parameters, images containe the binaries and dependencies.
+
+# to list all docker images in ur machine.
+$ docker images
+
+# images don't contain O.S and O.S packages
+# repository name is mean parent directory name ==> name of the file system u have :)
+
+# if u don't specified the image version, client will defaults to the latest.
+
+# docker images differenciation .-- Base Image: image that have no parent image --|- ubuntu
+							    |												  |- busybox
+								|                  								  |- debian
+								|
+								|-- Child Image: images that build on base images and add additional functinality 
+								|-- Official Images: images that officialy maintend and support by the folks, one word long
+								.-- User Images: images create and shared by users. user/image-name
+
+
+# if u r looking for all official images, --> docker hub --> explore tab
+# to dowanloa an image
+> docker pull <image_name> : <image_version> 
+$ docker pull mysql:5.7
+$ docker images
+
+# images in general consist of series of layers
+# each layer has <union file system>
+# docker use <union file systems> to combine these layers into a single image.
+# union file systems allow files and directoris of sperate file systems, known as branch.
+
+# to show image layers
+> docker history <image_name>
+$ docker history mysql
+$ docker history nginx
+
+# to get complete meta data of an image, 
+> docker inspect <image_name>
+$ docker inspect ngnix
+
+# images have no name, 
+# tag is specifing the tag of that particular repository.
+# image id is the id generated when u push ur image over the docker hub.
+# tag always associated with the latest image id.
+
+									.-- tag add to the image during building time
+# there're 2 ways to tag an image --|
+									.-- tag explicitly using the tag command 
+
+# tag command is 
+> docker tag SOURCE_IMAGE[:TAG] TARGET_IMAGE[:TAG]
+$ docker tag mysql:5.7 mysqlmustafa:test
+
+# if u don't define any tag, by default takes "latest" tag :)
+
+# do upload docker image to the docker hub u need account to do this
+# docker cloud using docker hub as it's native registery for storing both public and private repos.
+
+# to log into docker cloud from terminal u will use this command 
+$ docker login   --> it will ask for your creds.
+# one u enter the creds it will automatically encrypted and store in your machine.
+# to view creds use
+$ cat ~/.docker/config.json 
+
+# one the you login successfully u can push the image to the cloud.
+
+> docker image push USER(the account name)/image name
+
+$ docker image push mysqlmustafa   <-- this will not be applied it will be denied coz of the tag.
+
+# to resolve the issue above 
+$ docker image tag mysql mustafakamil/mysqlmustafa
+
+# now submit this command agin.
+$ docker image push mustafakamil/mysqlmustafa   <-- this image will be accepted because it's not a single image name
+
+# single image name allowed only for official docker image.
+
+# if u wanna to add a tag to the uploaded image
+$ docker image tag mustafakamil/mysqlmustafa  mustafakamil/mysqlmustafa:1.0.1
+$ docker images
+
+# after the command above u will see there's another image with this tag 1.0.1
+
+# although the tags are different but the <image_id> are the same coze they are just a copy. :)
+
+# now we need to push the image again.
+$ docker image push mustafakamil/mysqlmustafa:1.0.1
+
+# if u notice in the case above it will not upload all the image it will upload only the changes and that was the tag
+# if there is any changes with filesystem in this case it will upload the whole image.
+
+# now after u r done with all process above u need to logout using the command below
+$ docker logout
+
+
+------------------------------------------------------------Building Docker Images----------------------------------------------
+
+# dockerfile which is a file will be used to create basic images or custome images.
+# docker can build images automatically by reading the instructions from dockerfile
+
+# dockerfile is a text document that contains all commands a user could call on the command line to assemble an image.
+
+# docker image consist of read-only layers each of which represents a dockerfile instruction
+
+# to build docker image from a dockerfile
+> docker build -f <path_of_dokcerfile> 
+
+
+
+# Dockerfile instructions are use to create the docker images.
+
+# FROM: this instruction is used to initilize a new build stage and sets the base image from subsequent instructions.
+# A valid dockerfile must start with a <FROM> nstruction
+# Base image can be any valid image
+
+# FROM instruction fromat 
+> FROM <image>[:<tag>]
+
+# LABEL: added to images to organize images by project, record licens information.
+# for each label need to be added the line must have key-value pair.
+# example:
+> LABEL com.example.version='0.0.1-beta'
+> LABEL vendore1='ACME Incorporated'    <-- another label.
+
+# RUN: this instruction is used to execute any commands in new layer on top of the current image and commit the result.
+# the resulting committed image will be used for the next step in the Dockerfile.
+
+# Example:
+FROM ubuntu:14.04
+RUN apt-get update
+RUN apt-get install -y curl
+
+
+# CMD: this instruction should be used to run the software contained by ur image, along with any arguments.
+# the format will be:
+CMD ["executable","param1","param2"]
+
+# can only be one CMD command in the dockerfile, if u list more than one command, the last one only will be effect.
+# the purpose of the CMD command is to provide defaults for an executing container.
+
+# EXPOSE: this instruction is used to indicates the ports on which a container listens for connection.
+# the format will be:
+EXPOSE <port>
+
+#ENV: this instruction is used to sets the environment variables 
+<Key> to the <Value>
+
+# to make new software easier to run, u can use ENV to update the PATH environment variable for the software your container installes.
+
+# ADD: this instruction is used to copies new files, directories or remote file URLs from <src> and add them to the filesystem of the image at the path <dest>.
+
+# the format will be:
+ADD hom*/mydir/   --> add all files starting with hom
+
+# VOLUME: this instruction should be used to expose any database storage area, configuration storage, or files/folders created by ur docker container.
+
+# WORKDIR: instruction sets working directory for any RUN, CMD and ADD instructions that follow it in the docker file.
+
+
+
+# now we are ready to build our custom docker image. 
+
+# normally docker image build from a docker file.
+
+# docker build syntax:
+> docker build -t ImageName:TagName dir
+
+# <-t> is to mention a tag to ur image.
+
+# let's start to create a custom nginx image and excute it.
+
+# please use visual studio editor to build ur file.
+
+# if u wanna for example to add new extension for ur visual studio, the best one will be from the microsoft :)
+
+# to get auto complete in ur visual studio hit ctrl+space :)
+
+# now we have a samll sample of a dockerfile as below:
+
+	FROM ubuntu:latest
+	
+	LABEL version="0.0.1"
+	LABEL maintainer="godric.phoenix@gmail.com"
+	
+	RUN apt-get update && apt-get upgrade -y 
+	
+	RUN apt-get install nginx -y
+	
+	EXPOSE 90
+	
+	CMD [ "nginx","-g","daemon off;" ]
+
+# before start running the file above please be sure that's no any other container running at this time.
+ $ docker ps
+
+# now verify how many images u have in ur machine.
+ $ docker images
+
+# now let's run the dockerfile above as below:
+ ~/Desktop/build docker images$ docker build -t customngnix:0.0.1 ./
+
+# each instruction mentioned in ur dockerfile it will be a step during execution process...:)
+
+# now check ur local images 
+ $ docker images   --> u'll see the new custom image available...:)
+
+# now to run this image 
+ $ docker run -d -p 4444:90 customngnix:0.0.1
+
+# now u can modify the dockerfile by adding some comments before each instruction and change the port to 80 for example
+
+# after saving all changes that u added to the file run the same command to build it.
+ $ docker build -t customngnix:0.0.2 ./
+
+# u will see at this time it's so fast, coz the docker identified where the change present and start change it
+
+# let's run this new image.
+ $ docker run -d -p 8088:80 customngnix:0.0.2 
+
+# now let's talk about how to extend official docker image
+
+# in our example we will going to change the official <index.html> with new custom one.
+
+# go to ur <dockerfile> and start modify it with following
+
+ FROM nginx:latest
+ 
+ LABEL version="0.0.1"
+ LABEL maintainer="godric.phoenix@gmail.com"
+ 
+ WORKDIR usr/share/nginx/html 
+ 
+ RUN apt-get install nginx -y
+ 
+ # Expose port 80
+ EXPOSE 80
+ 
+ COPY index.html  index.html
+
+# if notice that we are not providing any <CMD> command and <RUN> command, coz these commands are already present inside the image. 
+
+# now we need to build the image.
+ $ docker build -t custom-ngnix:0.0.1 ./
+
+# now u need to run this image 
+ $ docker run -d -p 8086:80 custom-ngnix:0.0.1
+
+# let's say we need to update the index.html file again, do it but u need to build the image again.
+
+# now we have an assignment for the topics above.
+ - create dockerfile
+ - get the latest python image from docker repo.
+ - write down a simle python program 
+ - run python program inside the container
+ - tag and push the image to the docker hub
+ - remove image from local and again  execute it from hub.
+
+# let's start to resolve the assignment above 
+ - let's build the dockerfile first:
+	# Each instruction in this file generates a new layer that gets pushed to your local image cache
+	FROM python:latest
+	
+	# Identify the maintainer of an image
+	LABEL version="0.0.1"
+	LABEL maintainer="godric.phoenix@gmail.com"
+	
+	# Add python script
+	ADD my_script.py /
+	
+	# Execute python script
+	CMD [ "python","./my_script.py" ]
+
+ - now let's create the python script file <my_script.py>:
+	n=15
+	for i in range (0,n):
+	    print(((n-(i+1))*' ')+(((2*i)+1)*'*'))
+	for i in range (1,n):
+	    print(((i)*' ')+(((((n-i)*2)-1)*'*')))
+ 
+ - let's create the index.html file:
+	<h1>Hello World, Mustafa Here</h1>
+	<h3>Please advise that this is the dockerfile assignment</h3> 	
+
+# now let's build our image:
+	$ docker build -t custom-python:0.0.1 ./
+# now run the image
+ $ docker run custom-python:0.0.1
+
+# now after we ensure that our image had been build successfully and the script running successfully as well we'll remove it
+ $ docker image rm -f custom-python:0.0.1
+
+# now lets creat it again 
+ $ docker image build -t mustafakamil/python_program:0.0.1 ./
+
+# login to docker
+ $ docker login
+
+# now we need to push our image to hub.docker.com
+ $ docker push mustafakamil/python_program:0.0.1
+
+# at this point we have image in our docker hub, let's remove it from our local machine and try to run our image again.
+ $ docker image rm mustafakamil/python_program:0.0.1
+ $ docker run mustafakamil/python_program:0.0.1    ---> it will download it from hub coz we already delete it from local machine.
+
+
+------------------------------------------------------------Docker Data Management----------------------------------------------
+
+
+# we will take the topics below 
+ - contanier data management
+ - persistent data
+ - data volumes
+ - bind mount points in containers.
+
+# the first issue we will talk about is the < container persistent data problem>.
+# containers are immutable, once deploy never change, only re-deploy
+
+# configre, change or version upgrade need redeploy.
+# by default all files created inside a container are stored on a writable container layer.
+
+# regarding to the previous point ther data doesn't persisit when that container no longer exist and it can be difficult to get the data out of the container if another process needs, this problem is known as <container persistent data problem>
+
+# we have 2 solutions for this problem 
+ - volumes
+ - bind mounts
+
+ * let's talk about <volumes>: 
+  i. volumes are stored in a part of the host filesystem which is managed by docker.
+  ii. volumes are created and managed by containers.
+  iii. volumes can be created by volume command in docker file.
+  iv. when u create a volume it is stored within a directory on the docker host machine.
+  v. volumes can not be removed when user destroy the containers.
+
+ - now we need to pull mysql image from docker hub, search for the official one, check the image file and u can see there's 
+   VOLUME command in it :)
+   $ docker pull mysql  --> will pull the latest official image from docker hub.
+
+   $ docker inspect mysql:latest  --> inspect the image, u will find commands like <Volumes>
+
+   $ docker run -d --name mustafadb -e MYSQL_ALLOW_EMPTY_PASSWORD=TURE mysql  <-- to run container with mysql image
+
+   $ docker ps  <-- to check the container that we just spin out.
+   $ docker inspect mustafadb   <-- inspect the container and look for Volumes commands. 
+
+   # for the commands above u'll see there's Volumes command as well u'll see Mount commands. 
+   # in Mounts command u'll see "Destination": "/var/lib/mysql"
+   # as well this part "Source": "/var/lib/docker/volumes/#### etc.  <-- this mean by default this continer is writing data to this location.
+   # to check this just cd to this location above.
+   $ cd /var/lib/docker/volumes/44f60db531b5a10290f386c67f9504ccbafa8a7b494c4f65a5a3faa970f7085b/_data    <-- if available.
+
+   # to list all volumes had been created
+   $ docker volum ls
+
+   # let's stop the container above and see what will happen for the volumes :)
+   $ docker stop mustafadb
+
+   # u'll see the volume still exist, to inspect a particular volume use it's id.
+   $ docker inspect 1b1e402cabd441c6b6867fbc954b2ff3f59211ea5e71a07592b22ba926c1b718
+
+   # now if we decide to create a custome volume for a particular container, we will use the same run command above but we will insert volume inside it.
+
+   $ docker run -d --name mustafadb2 -e MYSQL_ALLOW_EMPTY_PASSWORD=TURE --mount source=mustafadb2,destination=/var/lib/mysql mysql
+
+   # by this approach even if u wanna to stop old container and start new version u can attach a specific volume to the new container.
+
+   $ docker run -d --name mustafadb3 -e MYSQL_ALLOW_EMPTY_PASSWORD=TURE --mount source=mustafadb2,destination=/var/lib/mysql mysql
+
+   # in the command above we start another container with the same volume :)
+
+ * now let's talk about bind mounts
+  i. Bind Mounts: means a file or directory on the host machine is mounted into container.
+  ii. mapping of host files into a container files.
+  iii. bind mounts may be stored anywhere on the host system.
+  iv. non-docker process on the docker host or a docker container can modify them at anytime.
+  v. bind mount can't be use in dockerfile  <-- :(
+  vi. it's very useful to share configuration files from the host machine to containers.
+  vii. sharing source code or build artifacts between a development environment on the docker host and a container.
+
+ - now we need to start nginx with bind mount command
+  # docker container run -d --name nginx --mount type=bind,source=4(pwd),target=/app nginx
+  $ docker run -d --name nginxbind --mount type=bind,source=$(pwd),target=/app nginx
+
+  # to check if our work correct we need to execute some commands on the container.
+  $ docker exec -it nginxbind bash    --> it will enable us to use bash inside the contaienr.
+  $ ls  --> u'll find the app directory.
+
+  # login to the app folder and check if there's any file.
+  # now on ur host machine go to the dockerbind folder and create new file.
+  $ echo "Hi, This is customfile" > test.txt
+
+ - now we have an assignment for Volume:
+  > DataBase Upgrade with Volumes in Containers 
+  > Create mysql container with some specific version with Volume named mysql-db
+  > After Starting the Container Verify Container Status Go to Database and Create Some Data 
+  > Stop and remove the Container 
+  > Strat new MqSQL Container with existing Volume and Verify the Data.
+
+
+ - assignment answers: 
+  > check how many containers we have
+   $ docker ps -a  --> must we see at STATUS --> Exited
+  > to remove all unused containers, Images and networks
+   $ docker system prune
+  > to remove all unused volumes
+   $ docker system prune --volumes
+  > to remove all unused images 
+   $ docker system prune -a
+
+  > create new sql container
+   $ docker run --name=test-mysql --env="MYSQL_ROOT_PASSWORD=mypassword" mysql:8.0  
+   # the line above will not work in detach mode
+
+  > the above command will run the container but not with not a user defined volume, we need to use defined volume
+   $  docker run -d --name=test-mysql -env="MYSQL_ROOT_PASSWORD=mypassword" --mount source:mysqldb,target:/var/lib/mysql mysql:8.0
+   # by the way the target that we provide in the command is the same that in the docker file at VOULUME :)
+
+  > verify mysql container
+   $ docker ps
+   $ docker inspect test-mysql
+
+  > now we need to create a database server :)
+   1. inspect the container to find the IP
+   2. Get the running port
+   3. install mysql client package
+    $ apt-get install mysql-client  OR in my Mac am using $ brew install mysql
+   4. execute command to login mysql db
+    mysql -u root -p<password> -h <hostIP> -P <port>
+    $ mysql -u root -p mypassword -h 172.17.0.2 -P 3306  ---> for mac it's littel different
+    $ mysql -u root -pmypassword -hlocalhost --protocol=TCP -P 3306
+
+   5. now we need to create the data base:
+    - CREATE DATABASE databasename;
+    - show databases;  --> to show all available databases
+    - use databasename;  --> to start insert data in our database
+    # Create Table in DataBase 
+    - CREATE TABLE Persons ( PersonID int, LastName varchar(255), FirstName varchar(255), Address varchar(255), City varchar(255) );
+    - show tables;
+	# Insert Some Data into the Table  
+	- INSERT INTO Persons (PersonID, LastName, FirstName, Address, City) VALUES (14, 'B. Erichsen', 'Tom', 'Skagen 216', 'Norway'); 
+	- INSERT INTO Persons (PersonID, LastName, FirstName, Address, City) VALUES (17, 'Zbyszek', 'Wolski', 'Keskuskatu 45', 'Finland');
+    # Verify DataBase 
+    - Select * From Persons;
+    # to exit from mysql
+    - exit;
+
+   > now we are ready to stop and remove the container, after that we will create new one with old volume
+    $ docker container stop test-mysql		--> stop container
+    $ docker container rm test-mysql		--> remove container
+    $ docker ps -a
+
+    $ docker run -d --name=test-mysql-2 -p 3306:3306 --env="MYSQL_ROOT_PASSWORD=mypassword" --mount source=mysqldb,target=/var/lib/mysql mysql:latest
+    $ docker inspect test-mysql-2
+
+
+ - assignment for bind:
+  > Start Nginx Container 
+  > Bind Mount the Nginx Container
+  > Edit the Index.html File in Local System (Host Machine) 
+  > Verify the the change on Running Container
+
+ - bind assignment answers:
+  > check if there's any running containers
+   $ docker ps
+  > check ur machine IPs
+   $ ifconfig
+  > spin nginx container
+   $ docker container run -d --name nginx-test -p 80:80 nginx
+  > go to browser and use
+    > 192.168.0.6/index.html
+  > now stop the container and run it again
+   $ docker container stop nginx-test
+   $ docker container start nginx-test
+  > now we need to find where's the index.html file
+   $ docker exec -it ngnix-test bash
+   # path is: /usr/share/nginx/html
+  > now stop the container and remove it
+   $ docker container stop ngnix-test
+   $ docker container rm ngnix-test
+  > run new container 
+   $ docker container run -d --name nginx-bind -p 80:80 --mount type=bind,source="$(pwd)",target=/usr/share/nginx/html nginx
+   $ docker ps
+  > now login to the container
+   $ docker exec -it nginx-bind bash
+  > cd cd /usr/share/nginx/html/
+  > now in the folder on ur computer create new file
+   $ touch testindex.html
+   # add the content below:
+
+	<!DOCTYPE html>
+	<html>
+	<head>
+	<title>Nginx Sample File</title>
+	</head>
+	<body>
+	
+	<h1>My NGINX File</h1>
+	<p>See I am using Bind Mount in Running Container</p>
+	
+	</body>
+
+
+--------------------------------------------------------------Docker Compose----------------------------------------------------
+
+# docker compse is like cluster used to run multiple containers as on service.
+# example for above, when user wanna to run mysql and tomcat in one yaml file with out starting spreatly.
+
+# we need 3 steps to work with docker compose
+ - define app's env with a dockerfile so it can be reproduce anywhere
+ - define services that make up ur app in docker-compse.yaml so they can run together in an isolated env.
+ - run docker-compose up and compose starts and run ur entire app.
+
+# now to work run the docker compose on linux only we need:
+ - download the neccessary files from github.
+  $ sudo curl -L "https://github.com/docker/compose/releases/ download/1.23.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+ - apply executable permissions to to the file
+  $ ls -lrt
+  $ sudo chmod +x /usr/local/bin/docker-compose
+  $ ls -lrt
+ - verify syntax.
+  $ docker-compose —version
+
+# per docker documents we don't need to install it speratly on machine since it's already installed :)
+
+# let's talking about docker-compose yaml file, it's a yaml formated file used to explain
+ - containers
+ - networks
+ - volumes
+
+# Docker Compose yml file :
+ - Yml file can be versioned.
+ - Version statement should be the FirstLine of File YML can be used with docker-compose command. Docker-compose.yml if default name of YAML file.
+ - Custom name can be used by command docker-compose -f   docker-compose -f xxx.yml
+
+# let's take a look on docker-compose yaml template
+
+	version: '3' #Specifies the Compose file syntax version. 
+	
+	services: #service is the name for a “Container in production”
+	  servicename: #container service name
+	    image: #optional, specify if build specific
+	    command: #optional, relmand CMD specified in image
+	    environment: #optional, similar to -e in Docker run command
+	    volumes: #optional, similar to --mount in docker run
+	  servicename2:
+	
+	volumes: #Optional, Mounts a linked path on the host machine that can be used by the container.
+	
+	networks: #Optional, Same as Docker Network
+
+# now we will start building yaml file: 
+
+	version: '3' #Version of YML file
+	
+	services:
+	  db:
+	    image: mysql:5.7
+	    volumes:
+	      - db_data:/var/lib/mysql
+	    restart: always
+	    environment:
+	      MYSQL_ROOT_PASSWORD: mypassword
+	      MYSQL_DATABASE: wordpress
+	      MYSQL_USER: wordpressuser
+	      MYSQL_PASSWORD: wordpress
+	
+	  wordpress:
+	    image: wordpress:latest
+	    depends_on:
+	      - db
+	    ports:
+	      - "8098:80"
+	    restart: always
+	    environment:
+	      WORDPRESS_DB_HOST: db:3306
+	      WORDPRESS_DB_USER: wordpressuser
+	      WORDPRESS_DB_PASSWORD: wordpress
+	
+	volumes:
+	  db_data:
+
+
+# now we need tochange the privilage for the file
+ $ chmod 777 docker-compose-yaml.yml 
+
+# now run the yaml file
+ $ docker-compose up -d
+ $ docker ps
+
+# to see the wordpress page
+ > https://localhost:8098/wordpress
+
+# now to see the log of a specific container
+ $ docker container logs d048df63d297    <--- container id
+ $ docker container logs -f d048df63d297  <-- in running mode
+ 
+# to stop containers had been created by docker-compose
+ $ docker-compose down
+
+# if we need to use a specific yaml file for example <myfile.yml> in this case we will use the command like:
+ $ docker-compose -f myfile.yml up -d
+
+# and to stop the compose above 
+ $ docker-compose -f myfile.yml down
+
+# Postgres port = 5432
+
+# if u use name of a volume that is not exist yet, u'll get error, so u need to create that volume first :)
+ $ docker volume create --name=<volumename>
+
+# check the volume
+ $ docker volume ls
+
+# full application docker-compose file <Custome-Application.yml>
+
+	version : '3'
+	
+	services: #Each entry in the services section will create a separate container when docker-compose is run
+	  distro:
+	    image: alpine #Image would be download at RunTime
+	    restart : always #Directive is used to indicate that the container should always restart
+	    container_name: Custom_alpine #Directive is used to override the randomly generated container name and replace it with a name that 	is easier to remember and work with.
+	    entrypoint: tail -f /dev/null #tail -f is an ongoing process, so it will run indefinitely and prevent the container from stopping. 	The default entrypoint is overridden to keep the container running.
+	
+	  database:
+	    image: postgres:latest
+	    restart: always
+	    container_name: postgres_db
+	    ports:
+	      - "5432:5432"
+	    volumes:
+	      - ../dump:/tmp/
+	
+	  web:
+	    image: nginx
+	    restart: always
+	    container_name: nginx_web
+	    ports:
+	      - "8094:80"
+	    volumes:
+	      - ./mysite.template:/etc/nginx/conf.d/mysite.template
+	    environment:
+	      - NGINX_HOST=sampl.com
+	      - NGINX_port=80
+	    links:
+	      - database:db
+	      - distro
+	
+	volumes:
+	  data:
+	    external: true #tells Docker Compose to use a pre-existing external volume
+	
+--------------------------------------------------------------Docker Swarm------------------------------------------------------
+
+# Swarm is used to cluster our containers
+# why we need to cluster our containers? 
+ - used to scale up our infrastructure when needed.
+ - manage containers and re-create containers if they failed/crushed
+ - upgrade services with zero down time.
+ - manage containers on vms. nodes.
+
+# docker swarm: is clustering and scheduling tool for docker contaienr.
+# swarm is docker's native support for orchestrating clusters of docker engins.
+# orchestrator: define nodes, define services, set how many nodes you run and where.
+# so at high level swarm take multiple docker engins running on different hosts and let's you use them together.
+
+# docker swarm have 2 types of nodes
+ 1. master (manager)
+ 2. worker
+
+# every swarm start with one manager designated as leader
+# swarm is highly available - using Raft algorthim
+
+# Raft algorthim is simple if we have 3 nodes A, B and C. 
+# A will be the master node, it's constantly check in with it's fellowers' nodes and syncing thier states. 
+# if A go down, then B will be the master
+# if A after while get back online, it will be down grade to be a worker (fellower) and B stay master
+
+# swarm features:
+ 1. Task scheduling: 
+    suppose we have a service we need to deploy it on a stack on swarm, we will cerate a stack of services in a swarm and u'll provide swarm with important information about:
+  - how actually u want service to be run this include parmeters like:
+   i. how many replicas u wanna on each service.
+   ii. how the replicas should be distributed.
+   iii. when should be run on certain node and mode.
+  - when the services deploy now it's job of manager to ensure deployment requirements u set continue to meet.
+  - that's mean if any container go down, another one will be spin up.
+  - example: if in the plan we need 3 replicas for a service and one go down the responsibility to spin up a new container.
+ 2. load balancing: master will serve the traffic as well manage workers, workers serve the traffic with master.
+ 3. Rolling update: if we have a bug or issue with containers, swarm will help us to patch update for the running continaers, user not impacting, if u wanna to patch update, so if u have 10 containers (one service) then 2 for ex will go down and new 2 with upate will spin up, and finally u have 8 with old update and 2 with new update and so on till all updated.
+
+ 4. security: when a node joins the swarm it will be used a token that had been encrypted by the swarm itself.
+
+# swarmkit: it's the cluster management and orchestration features embedded in the docker.
+
+# Host: docker host can be:
+ - manager
+ - worker
+ - both manager and worker at the sametime.
+
+# Service: when u create a service, u define:-
+ - it's optimal state
+ - number of replicas.
+ - network
+ - storage resources available
+ - ports
+ - and more :)
+
+# Task: it's a running container which is part of a swarm service and managed by a swarm manager, in another word (Task is a part of service), it's carried docker container and the commands to run inside the container.
+ - once task is assigned to a node, it cannot move to another node.
+
+# Nodes: it's an instance of the docker engine participating in the swarm.
+
+# usually in production swarm it's include nodes distributed across multiple physical and cloud machines.
+
+# to deploy ur application to a swarm --> submit service defenition to --> manager node --> dispaches units of work (tasks) to --> worker noeds
+
+# manager node also perform the orchestration and cluster management functions required to maintain the desired state of the swarm. 
+# the manager node elect a single leader to conduct orchestration tasks.
+
+# worker nodes: they receive and execute tasks dispatched from manager nodes.
+
+# services: it is the definition of the tasks to execute on the manager or worker nodes.
+
+
+------------------------------------------------------Create service on Docker Swarm -------------------------------------------
+
+# check if there's any docker running
+$ docker container ls
+
+# now check docker information, this command will display all information about ur docker engin 
+$ docker info
+
+# check the info u got and u'll find this field <Swarm: inactive> that's mean swarm need to be initilized :)
+
+# to initilize docker swarm on a machine u need to apply
+$ docker swarm init    <-- in dome cased it will work and sometimes it's failed, in my laptop it's working and got:
+
+	Swarm initialized: current node (q16zevxite4c0u5ex6y9yscrs) is now a manager.
+	
+	To add a worker to this swarm, run the following command:
+	
+	    docker swarm join --token SWMTKN-1-5gbw9s5q26oq5t45qu4e7s7eziomvc9srtiny6o996sa9hn9zn-7r3cy9qkaqsgpq3sn0cfly55z 192.168.65.3:2377
+	
+	To add a manager to this swarm, run 'docker swarm join-token manager' and follow the instructions.
+
+# if u run the command above on a cloud machine and that cloud have multiple IP layers on eth0
+ 1. check the ip using: $ ifconfig  --> to get the ip u can use --> X.X.X.X
+ 2. use initilize command again 
+  $ docker swarm init --advertise-addr X.X.X.X 
+
+# all the information u got after initilizing the swarm available in < docker info > except the token :)
+
+# for any help required for swarm
+$ docker swarm --help
+
+# if u wanna help with service command for example
+$ docker service --help
+
+# so let's make a small list of some commands that we work with:
+ > initilize docker swarm
+  $ docker swarm init
+ > docker swarm commands
+  $ docker swarm --help
+ > docker service commands 
+  $ docker service --help
+ > create docker service
+  $ docker service create <image>
+ > list all running services in docker Host
+  $ docker service ls
+
+# ex: suppose we wanna to create a service and in that service we need to ping google.
+ $ ping www.google.com
+
+# now to create service that ping a website 
+ 1. we need to setup O.S. in that particular service.
+  $ docker service create alpine ping www.google.com
+  # so the command above will create a service which will install the alpine latest image and execute ping command on this particular service.
+ 2. to list all services running 
+  $ docker service ls
+  # u will see in this command the ID is different from the container id that u got, yes this is the service id.
+  # Replicas 1/1 --> the right side show how many replicas was configured and the left side show how many repl. running
+ 3. to inspect the service.
+  $ docker service inspect <service name/service id>
+ 4. to see which container exactly running ur service on docker machine.
+  $ docker service ls  <-- to get the name of the service or the id
+  $ docker service ps <service name/id>
+  $ docker container inspect <container name/id>
+  # u will see in the json result this output
+  	"Cmd": [
+  	              "ping",
+  	              "www.google.com"
+ 
+ 5. so what we do is we start a service --> this service start container --> container run Task (ping)
+
+# let's now working on how to scal up the services
+ $ docker service update <service_name> --replicas <number of service>
+ $ docker service update interesting_proskuriakova --replicas 4
+ $ docker service ps <service name>
+ $ docker service ps interesting_proskuriakova
+
+# let's now try to stop one of the containers 
+ $ docker container rm -f <container name/id>
+ $ docker container ls
+ $ docker container rm -f interesting_proskuriakova.3.jqvja4v134t9crav635lwvgiy
+ $ docker service ls
+ $ docker service ps interesting_proskuriakova
+
+------------------------------------------------------- Create Docker Swarm Cluster --------------------------------------------
+
+# Create Docker Swarm Cluster mean create new docker nodes, create docker swarm service on single node which's called master and then we'll attached other nodes to the master.
+
+# we have multiple options to build cluster: 
+ 1. go to this url <https://labs.play-with-docker.com/> , this site provide run machine on demand. but they will be available only for 4 hours.
+
+ 2. docker machine + virtualbox
+ 3. digital machine + docker install.
+ 4. rollout machine on cloud like aws, google, azure, do ...etc.
+
+# we will go with digital ocean
+ - create --> droplets --> ubuntu 18.04.3 64  --> create
+ 					  |- starter: standard
+ 					  |- $5 plan
+ 					  |- DC: san francisco
+ 					  |- 3 droplets
+
+ - now to access any of these machines copy the ip, for example we're going to access the second machine.
+  $ ssh root@167.99.166.36  u'll get the password on ur email
+ - then u'll need to reset the password
+ - repeat the process above with other machines.
+ - if u wanna to check in which device u r use
+  $ hostname.
+ - now we need to install docker on all 3 machines.
+  1. sudo apt-get update
+ 
+  2. sudo apt-get install \
+  	 apt-transport-https \
+  	 ca-certificates \
+  	 curl \
+  	 software-properties-common
+   
+  3. curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+   
+  4. sudo add-apt-repository \
+     "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
+     $(lsb_release -cs) \
+     stable"
+  5. sudo apt-get update
+  6. sudo apt-get install docker-ce
+  7. docker version
+ - commands to install docker machine
+    1. base=https://github.com/docker/machine/releases/download/v0.14.0 && curl -L $base/docker-machine-$(uname -s)-$(uname -m) >/tmp/docker-machine &&
+    2. sudo install /tmp/docker-machine /usr/local/bin/docker-machine
+    3. docker-machine version
+ - to install docker compose
+    1. sudo curl -L https://github.com/docker/compose/releases/download/1.22.0/docker-compose-$(uname -s)-$(uname -m) -o /usr/local/bin/docker-compose
+    2. sudo chmod +x /usr/local/bin/docker-compose
+    3. docker-compose --version
+
+ - we need to check the docker swarm if it's active in the new nodes
+  $ docker info
+
+ - to initilize swarm in the new nodes
+  $ docker swarm init --advertise-addr <ip of the eth0>
+
+ - now our task is:
+  i. create for node docker swarm cluster
+   > we need to find the token for the node we wanna to make it a manager.
+    $ docker swarm join-token manager
+   > copy the result and past it in the other 3 nodes, that they will serve as worker.
+    $ docker swarm join --token SWMTKN-1-5gbw9s5q26oq5t45qu4e7s7eziomvc9srtiny6o996sa9hn9zn-dpnp7c7v6p5v39gx08d3gf00k 192.168.65.3:2377
+   > docker node ls   
+    # the one that we copy the token from will be the leader. :)
+
+   > sometime u'll get this error: 
+    Error response from daemon: This node is already part of a swarm. Use "docker swarm leave" to leave this swarm and join another one.
+    # this message mean u need to leave from the old swarm, that had been created when initilizing the swarm.
+     $ docker swarm leave -f
+     $ docker node ls
+   > now check the worker nodes, u can see there's no any container running.
+   > now we need to create a service in the manager
+    $ docker service create --replicas 8 alpine ping www.google.com
+    $ docker service ls
+    $ docker service ps <service name>
+    $ docker service ps sleepy_easley
+
+   > check ur nodes now :) 
+
+  ii. switch manager node in docker
+   $ docker node update --role manager <node_name>
+  iii. get token at run time
+   $ docker swarm join-token manager
+ 
+
+----------------------------------------------------- Docker Swarm Features and App. -------------------------------------------
+
+# docker swarm has new network driver <overlay network>
+# overlay network driver creates a distributed network among multiple docker hosts.
+# overlay network is allow containers to communicate inside the single swarm < it look like vlan>
+# when u init a swarm or join a docker host to a swarm, 2 new networks will be created on that host:
+ 1. ingress: it's an overlay network, which handles control and data traffic related to swarm services.
+ 	- so all services running a single docker swarm will communicate with the help of ingress
+ 	- ingress overlay network will only work if u not attaching the service with a user defiend overlay netwok.
+
+ 2. bridge network: it's called <docker_gwbridge> which connect the individual docker node to the other node participating in the swarm
+
+# Rules to when define overlay network:
+ 1. few ports need to be empty in the docker host machine. these ports need to be open to traffic <to and from> each docker host participating on an overlay network.
+               __ TCP port 2377 for cluster management communications.
+              |
+ 	- ports ----  TCP and UDP port 7946 for communication among nodes.
+ 			  |
+ 			  .-- UDP port 4789 for overlay network traffic.
+
+ 2. before create an overlay network, docker swarm must be initilized on node or join it to an existing swarm.
+
+# to create an overlay network.
+ > docker network create -d overaly <network_name>
+ 
+ $ docker info  <-- to check if the swarm had been initilize in this host.
+ $ docker network ls  <-- to check the networks
+
+ $ docker network create -d overlay mustafa_overlay  <-- create user defined overlay netowrk.
+
+# let's create a service now and attached it to user-defined overlay network
+ $ docker service create --name postgress --network mustafa_overlay -e POSTGERS_PASSWORD=mypassword postgres:10
+ $ docker service ls
+
+# now we will create another service and also attache it to user defined network.
+ $ docker service create --name mydrupal --network mustafa_overlay -p 80:80 drupal
+
+# if we need to remove un-used service 
+ $ docker service rm <service name>
+
+# now let's verify where my service running
+ $ docker service ps <service name>
+ $ docker service ps new-postgress
+ $ docker service ps mydrupal
+  - u can use node ip on ur browser to see how drupal working.
+  - to setup the Drupal --> save and continue --> standard --> postgresSQL
+  														   |-  database naem: postgres  (any name)
+  														   |-  database uname: postgres
+  														   |-  database pass: mypassword (the pass when u run the service.)
+  														   |-  advanced options: --> host: new_postgress  <-- db service name
+  														   |-  configure site .- sitename: www.testme.cm
+  														   					  |- site email: godric.phoenix@gmail.com
+  														   					  |- site maintenance: .- uname: mustafakamil
+  														   					  					   |- pass: ******
+  														   					  					   |- country: usa
+  														   					  					   .- time: chicago
+ - now if u copy another ip of any droplet and use browser u will get the same result (dropal site)
+ - although it had been run on a single node but it can be accessed from another nodes :)
+
+# Routing Mesh: it's an algorthim used by swarm for global traffic management.
+# let's take a look on how the Routing mesh working: 
+ - docker swarm publish service on some ports and allow outer world to access these services, this called <ingress routing mesh>
+ - The routing mesh enables each node in the swarm to accept connections on published ports for any service running in the swarm, even if there’s no task running on the node, with the help of swarm load balancer. 
+ - The routing mesh routes all incoming requests to published ports on available nodes to an active container.
+ - the command we just executed to create drupal service :  
+  $ docker service create --name mydrupal --network mustafa_overlay -p 80:80 drupal
+
+   - if u take a look on this part of command: -p <published_port>:<container_port> 
+
+    i. The <PUBLISHED_PORT>is the port where the swarm makes the service available.
+    ii. The <CONTAINER_PORT> is the port where the container listens.
+
+   - Routing mesh listens on the published port for any IP address assigned to the node.
+ - to verify Service Published Port :
+  > docker service inspect --format="{{json .Endpoint.Spec.Ports}}" <Service_Name>
+
+# assignement: deploy multi node service
+ 1. we will use distribute voting app.
+ 2. the archetict of the app as below:
+
+   .------------.      .------------. 
+   | voting-app |  	   | result-app |
+   |   Python   |  	   |   Node.js  |
+   '------------'  	   '------------'
+		 /			 	   ^
+		/			 	    \
+	   v                     \
+.------------.  	 	.------------.
+|    redis   |  	 	|     db     |
+|    Redis   |  	 	| PostgreSQL |
+'------------'  	 	'------------'
+		   \               ^
+		    \             /
+		     v	         /
+    	    .------------.
+		    |    worker  |
+		    |     .NET   |
+		    '------------'
+
+
+ 3. Service Parts:
+	i. This is 5 Service combination App.
+	ii. vote: front-end that enables a user to choose between a cat and dog
+	iii. redis: database where votes are stored
+	iv. worker: service that get votes from redis and store the results in a postgres database
+	v. db: the postgres database in which vote’s results are stored 
+	vi. result: front-end displaying the results of the vote
+	 
+	- So this is combination of Several docker and compose file. 
+	- Code can view at below location:  https://github.com/dockersamples/example-voting-app
+	- App is designed by Docker community and available on Docker Hub for Public use.
+	- The minimum requirements:
+	  > This service need 1 Mount Volume, 2 Network and 5 Stack Services
+	  > Two overlay network you can call front_end_ntw and back_end_ntw is needed.
+	  > Voting App:
+	    - Image : dockersamples/examplevotingapp_vote:before Web front app
+	  	- Publish this on port 5000, Listner Container Port 80 Publish 5+ replicas
+	  	- Publish on front_end_ntw overlay Network
+	 	   
+	  > Redis:
+	  	- Image : redis:3.2
+	  	- Redis is used to Store the Data from Front End Service Publish 5+ replicas
+	  
+	  > Worker:
+	    - Image : dockersamples/examplevotingapp_worker:latest This will process on redis and Store Data in postgres Publish 1+ replicas
+	  
+	  > DB Service:
+	  	- Image : Postgres:9.4
+	  	- Mount Volume and mount to /var/lib/postgresql/data Publish on back_end_ntw network
+	  	- Publish 1+ replicas
+	  
+	  > Result Service:
+	    - Image : dockersamples/examplevotingapp_result:bfore Will display the Voting result
+	    - Publish on back_end_ntw network
+	    - Publish on port 5001, Container port 80
+	    - Publish 1+ replicas
+	 
+
+# now we will resolve the assignment:
+ - let's first check how many nodes we have in this swarm <we build it already in the previous lecs>
+  $ docker node ls
+ - now let's identify how many networks we have.
+  $ docker network ls
+ - now we going to create 2 overlay networks
+  $ docker network create -d overlay front_end_ntw
+  $ docker network create -d overlay back_end_ntw
+ - now we need to work on Vote App:
+  $ docker service create --name vote -p 5000:80 --network front_end_ntw --replicas 5 dockersamples/examplevotingapp_vote:before
+  $ docker service ps vote
+
+ - now we will work with Redis:
+  $ docker service create --name redis --network front_end_ntw --replicas 5 redis:3.2
+  $ docker service ps redis
+
+ - now we will work with worker:
+  $ docker service create --name worker --network front_end_ntw --network back_end_ntw dockersamples/examplevotingapp_worker:latest
+  
+
+ - now we will work with DB:
+  $ docker service create --name db --network back_end_ntw --mount type=volume,source=db-data,target=/var/lib/postgresql/data postgres:9.4
+
+ - now let's working with result service:
+  $ docker service create --name result --network back_end_ntw -p 5001:80 dockersamples/examplevotingapp_result:before
+
+ - now to use the app above, use any ip for the 4 droplets, and for 
+  i. voting ip:5000
+  ii. to see reults ip:5001
+
+----------------------------------------------------- Docker Swarm Stack Feature. ----------------------------------------------
+
+# Stack : Stack is a group of interrelated services that share dependencies, and can be orchestrated and scaled together.
+# A single stack is capable of defining and coordinating the functionality of an entire application.
+# Complex Application may have multiple Stacks as well.
+# Docker Stack uses Compose’s YAML format and complements the Swarm-specific properties for service deployments.
+# File Name could be like docker-stack.yml
+# Docker : Docker Swarm
+
+# Build Own Image: Sample_Nginx Project
+# Build Image form Dockerfile  docker build —tag=friendly_hello . 
+
+# Push image on Docker Hub 
+# docker tag <image> <username/repository:tag>  docker push <username/repository:tag>
+
+# first u need to download the zip file in the lec, to the download folder and then u need to copy content to the droplet.
+ $ mkdir sample_nginx  <-- on the target machine.
+ $ scp Dockerfile docker-compose.yml app.py requirements.txt root@167.172.206.76:/root/sample_nginx/
+ 
+ $ docker build --tag=friendly_hello:v1.0.1 .
+
+ # when applying the command above, u'll get the message <Successfully tagged friendly_hello:v1.0.1>
+
+ # now we need to push image to the docker hub, so login to docker
+  $ docker login
+  $ docker tag <image> <username/repository:tag>
+  $ docker tag friendly_hello:v1.0.1 mustafakamil/friendly_hello
+  $ docker push mustafakamil/hello_friendly
+
+ # now we will go through docker compose Yaml:
+ # first let's Explore the docker-compose.yml file.
+  i. Pull the Image from Repository.
+  ii. Run 5 instances of that image as a service called web
+  iii. Limiting each one to use, at most, 10% of a single core of CPU time and 50MB of RAM.
+  iv. Immediately restart containers if one fails. Map port 4000 on the host to web’s port 80.
+  v. Instruct web’s containers to share port 80 via a load-balanced network called webnet.
+  vi. Define the webnet network with the default settings, which is a load- balanced overlay network.
+
+	version: "3"
+	services:
+	  # Service Name Defined as web
+	  web:
+	    # Pull the Image from Repository.
+	    # replace username/repo:tag with your name and image details
+	    image: mustafakamil/friendly_hello:latest 
+	    # Command used to deploy the Service
+	    deploy:
+	      # Run 5 instances of that image as a service called web
+	      replicas: 5
+	      resources:
+	        # Limiting each one to use, at most, 10% of a single core of CPU time and 50MB of RAM.
+	        limits:
+	          cpus: "0.1"
+	          memory: 50M
+	      # Immediately restart containers if one fails.     
+	      restart_policy:
+	        condition: on-failure
+	    # Map port 4000 on the host to web’s port 80.    
+	    ports:
+	      - "4000:80"
+	    # Define default network, the overlay network 
+	    networks:
+	      - webnet
+
+	networks:
+	  webnet:
+
+# now we need to deploy the service in docker swarm.
+ $ docker stack deploy -c docker-compose.yml nginx_start
+ 
+ - we don't have the network named <webnet> but when we run the yaml file we got these messages
+	Creating network nginx_start_webnet
+	Creating service nginx_start_web 	
+	# if u notice that it used the service name as prefix :)
+ $ docker network ls
+
+# now to check our stack, 
+ $ docker stack ls
+
+# to list all services for a specific stack
+ $ docker stack services nginx_start  
+
+# A single container running in this Service is called Task. So Single Service can execute multiple Tasks.
+ $ docker service ls
+ $ docker service ps nginx_start_web
+
+# go to digital ocean and copy any ip 
+# use ur browser and > ip:4000
+
+# let's see how we can scale up docker services
+# when we're talking about scale up we mean, increase or decrease services, we are going to increase or decrease the resources for the services as well.
+
+# so u can scale the number of services plus u can scale the number of resources for a partical service
+
+# if u wanna to scale services u can do it by:
+ i. changing the YAML file and redeploy it to reflect changes.
+ ii. add new service in the stack (This option need to add vitulizer)
+
+# let's check how many nodes that we have 
+ $ docker node ls
+ $ pwd  ---> to see in which directory we are
+
+# we need to know how many services are running:
+ $ docker service ls
+
+# let's start new stack
+ $ docker stack deploy -c docker-compose.yml nginx_start
+ $ docker stack ls 
+
+# now let's for example trying to scale the service by increasing the  replicas #, cpus usage percentage and memory in the docker-compose.yml, to be like this:
+
+version: "3"
+	services:
+	  # Service Name Defined as web
+	  web:
+	    # Pull the Image from Repository.
+	    # replace username/repo:tag with your name and image details
+	    image: mustafakamil/friendly_hello:latest 
+	    # Command used to deploy the Service
+	    deploy:
+	      # Run 5 instances of that image as a service called web, we will scale it up to 6
+	      replicas: 6
+	      resources:
+	        # Limiting each one to use, at most, 10% of a single core of CPU time and 50MB of RAM. scale up to 30% cpu and 100MB
+	        limits:
+	          cpus: "0.3"
+	          memory: 100M
+	      # Immediately restart containers if one fails.     
+	      restart_policy:
+	        condition: on-failure
+	    # Map port 4000 on the host to web’s port 80.    
+	    ports:
+	      - "4000:80"
+	    # Define default network, the overlay network 
+	    networks:
+	      - webnet
+	      
+	networks:
+	  webnet:
+
+# save the change that u did to the file
+# then we need to deploy the command below again:
+ $ docker stack deploy -c docker-compose.yml nginx_start
+
+# u'll see this sentence <Updating service nginx_start_web> that's mean it's scale up the service nginx_start_web
+ $ docker service ps nginx_start_web
+
+# what happen actually is the swarm start stopping containers one by one so the service will not get any downtime and spin up the containers with new configuration one by one also
+# all the node should be able to serve the traffic and load balancer will manage the request as per on algorthim
+
+# now we will test how we can add new service to the stack, but first need to add visualizer, this is a new application which will dispaly you containers running in the docker swarm, manager and the worker node, it's already in the docker hub
+
+# we will modify the yaml code and visualizer and align it to be the same as web.
+
+	  visualizer:
+	    image: dockersamples/visualizer:stable
+	    ports:
+	      - "8080:8080"
+	    volumes:
+	      - "/var/run/docker.sock:/var/run/docker.sock"
+	    deploy:
+	      placement:
+	        constraints: [node.role == manager]
+	    networks:
+	      - webnet
+
+# note that we use constraints , it's this service will execute in the manager node. so by using this command we can define which service will be execute in which hode.
+
+# agin update the stack
+ $ docker stack deploy -c docker-compose.yml nginx_start
+ $ docker service ls
+ $ docker service ps nginx_start_visualizer
+
+# to see what new service <visualizer> did
+ > copy ip of any container, go to ur browser and use <ip:4000> u must see ur page.
+ > now use the same ip but with different port <ip:8080>
+
+# in the visualizer u can notice that the visualizer container will be in purple color
+
+# now we will face an issue of the persist data with stack and how we will resolve it :)
+ - the issue occurred because in docker swarm ur container can be executed on any node
+ - if u wanna to make a mount point with the persistent volume, if u define a directory it may possible ur container this time will running with node1 and next time may be running with node2. in this case the persistent data volume will make issue, coz the first time it was running it, that directory that partical volume was created in node1, next time when u start the container it choose the node randomly and in that new node had been chosen there's no directory structure u need.
+ - then the container will start new brand database.
+
+# to resolve the data persistent issue:
+ 1. user can use the volume to define the mount point, user will mount the container directory with local host directory.
+ 2. restrict the service to execute on specific node.
+ 3. for our example we will add redis on existing service.
+
+# now let's add one more service to our docker-compose.yml.
+
+  redis:
+   image: redis
+   ports:
+    - "6379:6379"
+   volumes:
+    - "/home/docker/data:/data"
+   deploy:
+    placement:
+     constraints: [node.role == manager]
+    command: redis-server -- appendonly yes
+    networks:
+     - webnet  
+
+# save update.
+ $ docker stack deploy -c docker-compose.yml nginx_start
+ > u will get this message <Creating service nginx_start_redis>
+ 
+ $ docker service ls
+ # u can see under replicas <0/1> that's mean it's tryin to start redis but it is not uble to create it.
+ > this issue because in the yaml file we define the mount point of redis /home/docker  <-- this directory is not present in the host machine.
+ - so to resolve this issue we will replace:
+   volumes:
+    - "/home/docker/data:/data"
+
+   with:
+
+   volumes:
+    - "./data:/data"     <-- access the data from the current directory, where am executing the command.
+
+ # create a data directory 
+  $ mkdir ./data/
+ # update service now.
+ # u'll get messages some how like below:
+  Updating service nginx_start_web (id: 0g56lphw0t6xzc0cfavhjbzpu)
+  Updating service nginx_start_visualizer (id: xraykcwlgtmaqpneienllhlg4)
+  Updating service nginx_start_redis (id: kdh0hzqdwz61jk13g3qwfz8nd)
+
+ # in ur browser try to use <ip>:4000 --> u can see there's something different, it's Vistors with # :) before was 
+  > Visits: cannot connect to Redis, counter disabled
+
+ # let's do a test by stop redis service 
+  $ docker service rm nginx_start_redis
+ # check ur visualizer :)
+ # let's see what inside data folder , u will see this file <appendonly.aof>
+ # let's try to see the vistors again by refreshing the page. 
+  > Visits: cannot connect to Redis, counter disabled
+ # let's start the service again.
+ # check the stite again :)
+ 
+
+ # Now we will see how we can deploy distributed application
+ # as u know to distribute any stack the basic thing u need is the YAML file.
+ # this YAML file could be --> compose yaml file
+ 						   |-> stack yaml file 
+
+ # to get the distributed voting app yaml file 
+  > https://github.com/dockersamples/example-voting-app 
+
+ # to Get List of Stack running in Swarm  
+  $ docker swarm ls 
+ # to Get List of Task Running in Stack  
+  > docker stack ps <Stack_Name> 
+ # to Get List of Replicas Running in Service  
+  > docker stack services <Stack_Name>
+
+ # now we will get a copy of the stack yaml file from the link above:
+
+  version: "3"
+  services:
+  
+    redis:
+      image: redis:alpine
+      networks:
+        - frontend
+      deploy:
+        replicas: 1
+        update_config:
+          parallelism: 2
+          delay: 10s
+        restart_policy:
+          condition: on-failure
+  
+    db:
+      image: postgres:9.4
+      volumes:
+        - db-data:/var/lib/postgresql/data
+      networks:
+        - backend
+      deploy:
+        placement:
+          constraints: [node.role == manager]
+  
+    vote:
+      image: dockersamples/examplevotingapp_vote:before
+      ports:
+        - 5000:80
+      networks:
+        - frontend
+      depends_on:
+        - redis
+      deploy:
+        replicas: 2
+        update_config:
+          parallelism: 2
+        restart_policy:
+          condition: on-failure
+  
+    result:
+      image: dockersamples/examplevotingapp_result:before
+      ports:
+        - 5001:80
+      networks:
+        - backend
+      depends_on:
+        - db
+      deploy:
+        replicas: 1
+        update_config:
+          parallelism: 2
+          delay: 10s
+        restart_policy:
+          condition: on-failure
+  
+    worker:
+      image: dockersamples/examplevotingapp_worker
+      networks:
+        - frontend
+        - backend
+      depends_on:
+        - db
+      deploy:
+        mode: replicated
+        replicas: 1
+        labels: [APP=VOTING]
+        restart_policy:
+          condition: on-failure
+          delay: 10s
+          max_attempts: 3
+          window: 120s
+        placement:
+          constraints: [node.role == manager]
+  
+    visualizer:
+      image: dockersamples/visualizer:stable
+      ports:
+        - "8080:8080"
+      stop_grace_period: 1m30s
+      volumes:
+        - "/var/run/docker.sock:/var/run/docker.sock"
+      deploy:
+        placement:
+          constraints: [node.role == manager]
+  
+  networks:
+    frontend:
+    backend:
+  
+  volumes:
+    db-data:
+  
+# let's create file in the node, am using manager, and name it <docker-stack.yml>
+# paste the code above in it
+# run the file using:
+ $ docker stack deploy -c docker-stack.yml votingstack
+
+# now check how many stack running
+ $ docker stack ls
+
+# to see all the tasks related to a service 
+ $ docker stack ps votingstack
+ - docker name and task name are different
+
+# to get all replicas related to a sevice 
+ - docker stack services votingstack
+
+# notice: some time worker replication is not running, and if u open the log of the <worker> u can find some error message
+ $ docker service logs votingstack_worker
+ > errors related to socket exeption sometime. 
+ - this error is related to the .NET framework running inside the worker, microsoft error
+ - to resolve this error go to the yaml file and define instead of 1 replica for the worker use for example 10.   
+
+# now take any ip from the digital ocean and use ur browser.
+ > voting IP:5000
+ > result IP:5001
+
+
+--------------------------------------------- Docker Swarm Secrets: Manage Senstive Data ---------------------------------------
+
+# what is secrets: a secret is a piece of data, such as a password, SSH private key, SSL cretificate, or another piece of data that should not be transmitted over a network or stored unencrypted in a dockerfile or in your application's source code.
+
+# user can manage these senstive data with docker swarm sercrets,
+# docker centrally manage this data and send to only container that need it.
+# docker secrets is only available in the swarm mode.
+# only granted service and containers access the secrets data over the network.
+# container secrets provide a layer of abstraction between container and a set of credentials.
+# when a user adds a new secret to a swarm cluster, this secret is sent to a manager using a TLS connection. 
+# TLS: is a cryptography protocol that provides communication security over a network by providing communication encryption, privacy and data intigrity.
+# when we have multiple managers, RAFT manage the secrets on all the managers.
+# containers work on mounted decrypted secrets, which store at /run/secrets/<secret_name> in containers.
+# User can update a service to grant it access to additional secrets or revoke its access to a given secret at anytime.
+# when container task stops running, the decrypted secrets shared to it are unmounted from the in-memory filesystem for that container and flshed from the node's memory.
+
+# now let's understand the secret command:
+ $ docker secret --help
+
+# there're 2 ways to create secret:
+ - by file: $ docker secret create <secret_name> <file_name>
+ - by cli:  $ echo "secret_string" | docker secret create <secret_name> -
+
+# let's first create a secret dirctory 
+ $ mkdir secretsExample
+ $ cd  secretsExample
+ $ vi dbpass.txt
+   --> for example add test@123  --> :wq
+ $ cat dbpass.txt
+
+ $ docker secret create db_password dbpass.txt   --> by file
+
+ $ echo "db_user" | docker secret create db_username - 
+
+# now to list all secret in ur machine
+ $ docker secret ls
+
+# to inspect a secret:
+ $ docker secret inspect <secret_name>  --> we will get info on the secret not the secret itself
+ 
+ $ docker secret inspect db_password
+
+# to see the history of all commands that u used in the cli use:
+ $ history
+
+# so the method above to create secret is not ideal
+# let's create Postgres service with secrets: 
+ $ docker service create --name <service_naem> --secret <username_secret> --secret <pass_secret> -e POSTGRES_PASSWORD_FILE=run/secrets/ <pass_secret> -e POSTGRES_USERS_FILE=run/secrets/ <user_secret><IMAGE>:TAG
+
+ $ docker service create --name postgress --secret db_username --secret db_password -e POSTGRES_PASSWORD_FILE=/run/secrets/db_password -e POSTGRES_USER_FILE=/run/secrets/db_username postgres
+
+ $ docker service ls
+ $ docker service ps postgress
+
+# to access the container above
+ $ docker exec -it postgress...... bash
+ $ cd /run/secrets
+ $ cat db_password
+
+# now let's take a look about how to use secret in the docker stack.
+ 
+ - docker compse yaml file:
+version: "3.1"
+services:
+  # Service Name Defined as web
+  postgresDB:
+    # Pull the Image from Repository.
+    image: postgres:latest
+    # Command to use secrects in 
+    secrets:
+      # define Secrets name
+      - db_username
+      - db_password
+    environment:
+        # Define environment varaibles
+        POSTGRES_PASSWORD_FILE: /run/secrets/db_password
+        POSTGRES_USER_FILE: /run/secrets/db_username
+
+  centOS:
+    image: centos
+    deploy:
+      replicas: 1
+    entrypoint: /bin/sh
+    stdin_open: true
+    tty: true
+    secrets:
+      - source: my-secret
+
+
+secrets:
+  db_username:
+    file: ./postgres_user.txt
+  db_password:
+    file: ./postgres_password.txt
+  my-secret:
+    external: true
+
+
+# before implementing the command above, remove the secrets that u created early.
+# now create the required text files mention in the yaml file above
+ $ vi postgres_user.txt
+  --> tkdbowner
+
+ $ vi postgres_password.txt
+  --> tkdbpassword
+
+# now create the docker compose yaml file:
+ $ vi docker-compose.yml
+
+# now let's create the stack
+ $ docker stack deploy -c docker-compose.yml postgresdb
+
+ $ docker stack ls
+ $ docker service ls  ==> u can see under the name column postgresdb_postgresDB --> the first part come from the stack name and the second part come from service name in the yaml file.
+ $ docker stack ps postgresdb
+ $ docker service ps postgresdb_postgresDB
+
+# quick notes, if we using like what we have in centOS --> my-secret which is external (cli base secret) u need to use external : true under secrets section.
+
+ $ docker stack rm postgresdb
+ $ docker stack ls
+ $ docker service ls
+ $ docker secret ls
+ $ docker stack deploy -c docker-compose.yml postgres_os_stack   <-- at this point the stack will not been created we need to do one more thing.
+ $ echo "mytestvalue" | docker secret create my-secret -
+ $ docker secret ls
+ $ docker stack deploy -c docker-compose.yml postgres_os_stack
+ # keep in mind the centos image is heavy so just wait untill it been completed
+
+
+--------------------------------------------------- zero-downtime service upgrade ----------------------------------------------
+
+# this is consider a dream for software companies
+
+# Swarm Help us to Limit the Downtime in Service Update/Upgrade.
+# It’s all become possible with Rolling Upgrade Approach.
+												   .-- take a maintenance window, upgrade service
+# how to upgrade our service or software version --|
+												   .-- take any maintenance window, rolling upgrade (zero downtime upgrade)
+
+# in rolling upgrade we will down a single server upgrade service in this particular server and then attached that server to the production, repeat this process with other servers.
+
+# so in reality we replaced old container with new one,
+
+# to enhance version of our deployed service
+ $ docker service update --image <imagename> <servicename>
+
+# now suppose we need to upate complete stack
+# edit the yaml file and deploy it again
+ $ dodcker stack deploy -c <yml file> <servicename>
+
+# let's start nginx service but with lower version 
+ $ docker service create -p 80:8080 --name <service_naem> <nginx image: version>
+
+ $ docker service ls   --> to check if there's any service still running.
+ $ docker stack rm <service name>
+
+ # let's build our old version nginx
+ $ docker service create -p 80:8080 --name web_server nginx:1.14.2
+ $ docker service ls
+
+ # what's the difference between vertical and horizontal scaling
+  - horizontal : it means we are increasing the number of replicas, number of containers
+  - vertical : upgrading resoureces in the current service, CPUs, RAMs, Hards etc.
+
+ # we will focus on how to scale horizontally.
+  $ docker service scale <service name>=<number of replicas>
+  $ docker service scale web_server=10
+  $ docker service ls
+
+ # all the replicas will run nginx in 1.14.2 version, now we need to upgrade this version to the newest one.
+  $ docker service update --image nginx:1.15.12 web_server
+  # u can notice the rolling upgrade, upgrade containers one by one.
+
+  # to check our work above
+  $ docker service ps web_server
+
+  # if u take a look on the command above results, u can see it's actully replacing old container by new one.
+
+ # now another example, let's say we need to change the ports from 8080 to 9090
+  $ docker service update --publish-rm 8080 --publish-add 9090:80 web_server
+  $ docker service ps web_server
+ 
+ # to stop the service above:
+  $ docker service rm web_server
+  $ docker service ls
+  $ docker service ps web_server
+
+-------------------------------------------------- health check in docker services ---------------------------------------------
+
+# checking resources health
+# health check command:
+ $ HEALTHCHECK [option] CMD <command>: the command that sets the container health check
+
+# if any failed occurred then the swarm will fail the bad container and spin up a new one :)
+
+# Options that we have with healthcheck:
+ ➤ --interval=<interval>: The time interval between two health checks. The default value is 30 seconds.
+
+ ➤ --timeout=<interval>: The timeout for running the health check command. The health check fails if the timeout is exceeded. The default value is 30 seconds.
+
+ ➤ --retries=<number of times>: The container status is regarded as unhealthy if the health check fails continuously for a specified number of times. The default value is 3.
+
+ ➤ --start-period=<interval>: The initialization time of application startup. Failed health check during the startup is not counted. The default value is 0 second.
+
+# now let's start with practical example:
+ $ mkdir healthcheck
+ $ cd healthcheck 
+ $ ls
+
+ # let's run new container
+ $ docker contaienr run --name postgres1 -d postgres
+
+ # ok now we need to setup a health check inside postgres <to check if the connection to the database healthy or not>
+
+ $ docker container exec -it postgres1 bash
+  # pg_isready -U postgres   --> we must get some output here.
+  # exit
+
+ $ docker ps
+ 
+ # start another container
+  $ docker container run -d --name postgres2 --health-cmd="pg_isready -U postgres || exit 1" postgres
+  $ docker ps
+
+  # u can see there's new thing in the status ==> (health: starting) as we see here health at starting mode (by default)
+  							   .- starting (helthcheck starting when ever container starting) by default
+  # there are 3 health modes --|- healthy
+  							   .- un healthy
+
+ # let's start another container
+  $ docker container run -d --name postgres2 --health-cmd="pg_isready -U root || exit 1" postgres  <-- check the health of the user
+  $ docker ps
+
+  # u can see in the output the old one status (helth:starting) now changed to healthy and the new one status (health:starting) 
+
+# as long as we see helth with container but it's not useful because if there's any issue happen with the container there's nothing to do
+# so the solution is use helth with swarm, if there's any issue with container, service or task, new one will be spin up.
+
+# let's start new service
+ $ docker service create --name postgresservice1 postgres
+ $ docker service ls 
+# now we need to put helth check in our service
+ $ docker container run -d --name postgresservice2 --health-cmd="pg_isready -U postgres || exit 1" postgres 
+ # here we will see a different thing, when we will starting the service it's not comming in the running mode, it still in the starting mode and it will keep in the starting mode up to 30 sec, after this period it will switch to the running mode and then start ur service.
+
+ # why it take 30 secs?
+ # because when we running the helth check inside the docker swarm, it will not accepting the service to running until the first helth check will be passed, by default the interval is 30 sec. at the time of initilization so the next interval will be after 30 sec
+
+
+------------------------------------------------- Docker swarm container placement ---------------------------------------------
+
+# Docker Swarm automatically try and place your containers to provide maximum resiliency within the service.
+# Place the Container on Specific node, for monitoring for application functionality reason. 
+# there're multiple way to achieve our goal
+ 1. service constraints
+
+ - Service constraints are used to control the nodes a service can be assigned to.
+ - Service Constraints can be added to creation time, or add/remove at update time.
+ - By Creation of Hard Coded requirement, container placement fails if not matched. (stuck in bending mode)
+ - Multiple Constraints can be assigned to a single service.
+ - It supports key or key=value pair
+
+# before starting clean service, stop any running services. 
+
+# First Let’s start the visualiser in Docker Swarm
+ $ docker run -it -d -p 8080:8080 -v /var/run/docker.sock:/var/run/docker.sock dockersamples/visualizer
+
+ #what u see in the visualizer u can see it in the cli
+ $ docker node ls
+
+# Create Service on Manager Node Only
+ $ docker service create --constraint node.role==manager <image_name>
+ $ docker service create --constraint node.role==manager postgres
+ $ docker service ls 
+
+ # let's run another service on worker this time
+  $ docker service create --name webserver --constraint node.role==worker --replicas=5 nginx
+
+# what if we need to run a specific app on sepecific node, for ex/ one node have very high cpus and rams, so how we defined these conditions. answer by using lables, so we are tagging our nodes and our services :)
+
+# Add Label on any Node and define Constraints
+ $ docker node update --label-add=region=east-1-d <node_id>
+ $ docker node ls
+ $ docker node update --label-add=region=east-1-d c83....etc  <-- master node id 
+
+ # to check where's our lable
+ $ docker node ls
+ $ docker node ispect <node_id>
+ # take a look in the result u can find there's lable :) 
+ 
+ # now we will start a service in a specific lable (east-1-d)
+ $ docker Service create --constraint node.labels.region==east-1-d <image_name>
+ $ docker Service create --name postgres --constraint node.labels.region==east-1-d postgres
+
+# Remove Constrains and add new constrains on running service
+ $ docker service update --constraint-rm=<Constraint added on service> --constraint-add <new constraint> <service_name>
+ $ docker service update --constraint-rm=node.labels.region==east-1-d --constraint-add node.role==worker podtgres
+
+# now let's know how to define service constraints in dokcer stack file
+ $ docker service ls
+ $ mkdir serviceconstraint
+ $ cd serviceconstraint
+ $ vi docker-compose1.yml
+
+  version: "3.1"
+  services:
+  # service Name Defined as web
+  mysqlDB:
+   # Pull the Image from Repository
+   image: mysql:latest
+   deploy:
+    replicas: 1
+    placement:
+     constraints:
+      - node.lable.region == east-1-d
+
+ $ ls  <-- to see the compse file exist
+
+ $ docker stack deploy -c docker-compose.yml mysql
+ $ docker stack ls
+ $ docker service ls
+
+ # if u see the service in the visulaizer plinking that's mean docker is not able to start this prtical service in health mode, because we didn't defined any enivornment variable in the mysql db. 
+
+  version: "3.1"
+  services:
+  # service Name Defined as web
+  mysqlDB:
+   # Pull the Image from Repository
+   image: mysql:latest
+   environment:
+    MYSQL_ROOT_PASSWORD: "mypassword"
+    MYSQL_DATABASE:"drupal"
+   deploy:
+    replicas: 1
+    placement:
+     constraints:
+      - node.lable.region == east-1-d
+
+# replace the yaml file
+# now remove the stack
+ $ docker stack rm sql
+
+ $ docker stack ls
+
+# now apply the stack yaml file again.
+ $ docker stack deploy -c docker-compose.yml mysql
+ 
+
+============================================================= End Of Docker ======================================================
