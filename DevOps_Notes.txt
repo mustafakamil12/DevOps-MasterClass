@@ -1694,6 +1694,8 @@ iterm
 
 ==================================================================== Docker ======================================================
 
+>> https://github.com/PowerShell/PowerShell-Docker#examples  <<
+
 # Docker is a tool designed to make it easier to create, deploy and run applications by using containers.
 # Docker containers are lightweight alternatives to virtual machines and use the host OS.
 # You don't have to pre-allocate any RAM in containers 
@@ -3832,6 +3834,18 @@ secrets:
   previously mentioned execution plan and resource graph, you know exactly what Terraform will change and in what order,
   avoiding many possible human errors.
 
+# Create Droplet in digital ocean <ubuntu-terraform> <167.71.81.197> <P@ssw0rdP@ssw0rd>
+
+# To install terraform on linux ubuntu:
+	i. sudo apt-get update
+	ii. wget https://releases.hashicorp.com/terraform/0.15.3/terraform_0.15.3_linux_amd64.zip
+	iii. mv terraform_0.15.3_linux_amd64.zip terraform.zip
+	iv. sudo apt-get install unzip
+	v. unzip terraform.zip
+	vi. sudo mv terraform /usr/local/bin/
+	vii. cd /usr/local/bin/
+    viii. terraform version
+   	ix. terraform
 
 =========================================================== End Of Terraform =====================================================
 
